@@ -1,0 +1,9 @@
+C:\Users\maxim\source\repos\EnrageR\EnrageR\bin\Debug\EnrageR.exe.config
+C:\Users\maxim\source\repos\EnrageR\EnrageR\bin\Debug\EnrageR.exe
+C:\Users\maxim\source\repos\EnrageR\EnrageR\bin\Debug\EnrageR.pdb
+C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\Debug\EnrageR.csprojAssemblyReference.cache
+C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\Debug\EnrageR.Form1.resources
+C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\Debug\EnrageR.Properties.Resources.resources
+C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\Debug\EnrageR.csproj.GenerateResource.cache
+C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\Debug\EnrageR.exe
+C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\Debug\EnrageR.pdb
