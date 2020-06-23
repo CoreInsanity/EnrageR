@@ -25,6 +25,7 @@ namespace EnrageR.Models
             var locs = new List<Location>();
             locs.Add(new Location(-1085.701904f, -3037.571777f, 13.94573784f, Locations.LSAirport));
             locs.Add(new Location(-1524.258789f, -974.5093384f, 10.16818905f, Locations.Pier));
+            locs.Add(new Location(-74.73883057f, -819.6027222f, 326.1750488f, Locations.Maze));
             locs.Add(new Location(1878.713989f, 3972.780029f, 34.01015472f, Locations.Sandy));
             locs.Add(new Location(-53.80023575f, 6663.047363f, 27.18950272f, Locations.Paleto));
             locs.Add(new Location(1664.367554f, 4691.213379f, 43.06264877f, Locations.Grapeseed));
@@ -40,6 +41,7 @@ namespace EnrageR.Models
     { 
         LSAirport,
         Pier,
+        Maze,
         Sandy,
         Paleto,
         Grapeseed,

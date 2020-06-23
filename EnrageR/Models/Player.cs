@@ -14,12 +14,12 @@ namespace EnrageR.Models
         private float Health;
         private GTA Gta;
         private Location Location;
-        private Thread GodModeThread;
+        private Thread AutoHealThread;
 
         public Player(GTA gta)
         {
             Gta = gta;
-            GodModeThread = new Thread(new ParameterizedThreadStart(AutoHeal));
+            AutoHealThread = new Thread(new ParameterizedThreadStart(AutoHeal));
         }
         public Location GetLocation()
         {
@@ -47,22 +47,29 @@ namespace EnrageR.Models
             Health = Gta.ReadFloat(Gta.HealthAddy);
             return Health;
         }
-        public void EnableAutoHeal(int delay)
+        public void EnableAutoHeal(int delay, float health)
         {
-            GodModeThread = new Thread(new ParameterizedThreadStart(AutoHeal));
-            GodModeThread.Start(delay);
+            AutoHealThread = new Thread(new ParameterizedThreadStart(AutoHeal));
+            AutoHealThread.Start(new HealingParms() { Health = health, Delay = delay });
         }
         public void DisableAutoHeal()
         {
-            GodModeThread.Abort();
+            AutoHealThread.Abort();
         }
-        private void AutoHeal(object delay)
+        private void AutoHeal(object parms)
         {
+            var parmsCast = (HealingParms)parms;
             while (true)
             {
-                if (GetHealth() < 200) SetHealth(200);
-                Thread.Sleep((int)delay);
+                
+                if (GetHealth() < parmsCast.Health) SetHealth(parmsCast.Health);
+                Thread.Sleep(parmsCast.Delay);
             }
         }
+    }
+    class HealingParms
+    {
+        public int Delay { get; set; }
+        public float Health { get; set; }
     }
 }

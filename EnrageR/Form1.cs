@@ -18,6 +18,7 @@ namespace EnrageR
     public partial class Form1 : Form
     {
         private Player Player;
+        private Vehicle Vehicle;
         private Hook KeyboardHook;
         private GTA Gta;
 
@@ -30,6 +31,7 @@ namespace EnrageR
         {
             Gta = new GTA();
             Player = new Player(Gta);
+            Vehicle = new Vehicle(Gta);
             foreach (var scrn in Screen.AllScreens)
                 if (scrn.Bounds.Contains(this.Location)) this.Location = new Point(scrn.Bounds.Right - this.Width, scrn.Bounds.Top);
             WindowState = FormWindowState.Minimized;
@@ -150,11 +152,21 @@ namespace EnrageR
             sec++;
             if (sec >= 10) OnLeave();
         }
-
-        private void GodModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void ExtremeGodmode_CheckedChanged(object sender, EventArgs e)
         {
-            if (GodModeCheckBox.Checked) Player.EnableAutoHeal(Convert.ToInt32(AutoHealTextbox.Text));
+            if (ExtremeGodmodeCheckbox.Checked) Player.EnableAutoHeal(100, 10000);
             else Player.DisableAutoHeal();
+        }
+        private void AutoHeal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (AutoHealCheckBox.Checked) Player.EnableAutoHeal(Convert.ToInt32(AutoHealTextbox.Text), 200);
+            else Player.DisableAutoHeal();
+        }
+
+        private void VehicleGodmodeCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (VehicleGodmodeCheckbox.Checked) Vehicle.EnableAutoRepair();
+            else Vehicle.DisableAutoRepair();
         }
     }
 }

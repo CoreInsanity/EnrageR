@@ -39,14 +39,17 @@
             this.TeleportButton = new System.Windows.Forms.Button();
             this.TeleportBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.CloseTimer = new System.Windows.Forms.Timer(this.components);
-            this.GodModeCheckBox = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.AutoHealTextbox = new System.Windows.Forms.TextBox();
+            this.ExtremeGodmodeCheckbox = new System.Windows.Forms.CheckBox();
+            this.AutoHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.CloseTimer = new System.Windows.Forms.Timer(this.components);
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.VehicleGodmodeCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // ExitImage
@@ -140,8 +143,8 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.AutoHealTextbox);
-            this.groupBox2.Controls.Add(this.checkBox1);
-            this.groupBox2.Controls.Add(this.GodModeCheckBox);
+            this.groupBox2.Controls.Add(this.ExtremeGodmodeCheckbox);
+            this.groupBox2.Controls.Add(this.AutoHealCheckBox);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(12, 180);
             this.groupBox2.Name = "groupBox2";
@@ -150,33 +153,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Health";
             this.groupBox2.MouseHover += new System.EventHandler(this.OnHover);
-            // 
-            // CloseTimer
-            // 
-            this.CloseTimer.Interval = 1000;
-            this.CloseTimer.Tick += new System.EventHandler(this.CloseTimer_Tick);
-            // 
-            // GodModeCheckBox
-            // 
-            this.GodModeCheckBox.AutoSize = true;
-            this.GodModeCheckBox.Location = new System.Drawing.Point(23, 21);
-            this.GodModeCheckBox.Name = "GodModeCheckBox";
-            this.GodModeCheckBox.Size = new System.Drawing.Size(165, 17);
-            this.GodModeCheckBox.TabIndex = 0;
-            this.GodModeCheckBox.Text = "Auto-heal every               ms";
-            this.GodModeCheckBox.UseVisualStyleBackColor = true;
-            this.GodModeCheckBox.CheckedChanged += new System.EventHandler(this.GodModeCheckBox_CheckedChanged);
-            this.GodModeCheckBox.MouseHover += new System.EventHandler(this.OnHover);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(23, 44);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(155, 17);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Extreme godmode (RISKY)";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // AutoHealTextbox
             // 
@@ -189,6 +165,56 @@
             this.AutoHealTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.AutoHealTextbox.MouseHover += new System.EventHandler(this.OnHover);
             // 
+            // ExtremeGodmodeCheckbox
+            // 
+            this.ExtremeGodmodeCheckbox.AutoSize = true;
+            this.ExtremeGodmodeCheckbox.Location = new System.Drawing.Point(23, 44);
+            this.ExtremeGodmodeCheckbox.Name = "ExtremeGodmodeCheckbox";
+            this.ExtremeGodmodeCheckbox.Size = new System.Drawing.Size(155, 17);
+            this.ExtremeGodmodeCheckbox.TabIndex = 1;
+            this.ExtremeGodmodeCheckbox.Text = "Extreme godmode (RISKY)";
+            this.ExtremeGodmodeCheckbox.UseVisualStyleBackColor = true;
+            this.ExtremeGodmodeCheckbox.CheckedChanged += new System.EventHandler(this.ExtremeGodmode_CheckedChanged);
+            // 
+            // AutoHealCheckBox
+            // 
+            this.AutoHealCheckBox.AutoSize = true;
+            this.AutoHealCheckBox.Location = new System.Drawing.Point(23, 21);
+            this.AutoHealCheckBox.Name = "AutoHealCheckBox";
+            this.AutoHealCheckBox.Size = new System.Drawing.Size(165, 17);
+            this.AutoHealCheckBox.TabIndex = 0;
+            this.AutoHealCheckBox.Text = "Auto-heal every               ms";
+            this.AutoHealCheckBox.UseVisualStyleBackColor = true;
+            this.AutoHealCheckBox.CheckedChanged += new System.EventHandler(this.AutoHeal_CheckedChanged);
+            this.AutoHealCheckBox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // CloseTimer
+            // 
+            this.CloseTimer.Interval = 1000;
+            this.CloseTimer.Tick += new System.EventHandler(this.CloseTimer_Tick);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.VehicleGodmodeCheckbox);
+            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(12, 269);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(336, 71);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Vehicle";
+            // 
+            // VehicleGodmodeCheckbox
+            // 
+            this.VehicleGodmodeCheckbox.AutoSize = true;
+            this.VehicleGodmodeCheckbox.Location = new System.Drawing.Point(23, 31);
+            this.VehicleGodmodeCheckbox.Name = "VehicleGodmodeCheckbox";
+            this.VehicleGodmodeCheckbox.Size = new System.Drawing.Size(77, 17);
+            this.VehicleGodmodeCheckbox.TabIndex = 0;
+            this.VehicleGodmodeCheckbox.Text = "Godmode";
+            this.VehicleGodmodeCheckbox.UseVisualStyleBackColor = true;
+            this.VehicleGodmodeCheckbox.CheckedChanged += new System.EventHandler(this.VehicleGodmodeCheckbox_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,6 +222,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(360, 480);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.MarqueeLabel);
@@ -217,6 +244,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,9 +263,11 @@
         private System.Windows.Forms.ComboBox TeleportBox;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Timer CloseTimer;
-        private System.Windows.Forms.CheckBox GodModeCheckBox;
+        private System.Windows.Forms.CheckBox AutoHealCheckBox;
         private System.Windows.Forms.TextBox AutoHealTextbox;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox ExtremeGodmodeCheckbox;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox VehicleGodmodeCheckbox;
     }
 }
 
