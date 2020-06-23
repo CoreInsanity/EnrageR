@@ -45,11 +45,16 @@
             this.CloseTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.VehicleGodmodeCheckbox = new System.Windows.Forms.CheckBox();
+            this.VehicleHealthTrackbar = new System.Windows.Forms.TrackBar();
+            this.DestroyLastUsedButton = new System.Windows.Forms.Button();
+            this.HealthTrackbar = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).BeginInit();
             this.SuspendLayout();
             // 
             // ExitImage
@@ -110,7 +115,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 93);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(336, 71);
+            this.groupBox1.Size = new System.Drawing.Size(336, 81);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Teleport";
@@ -118,6 +123,7 @@
             // 
             // TeleportButton
             // 
+            this.TeleportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.TeleportButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TeleportButton.Location = new System.Drawing.Point(167, 29);
             this.TeleportButton.Name = "TeleportButton";
@@ -142,13 +148,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.HealthTrackbar);
             this.groupBox2.Controls.Add(this.AutoHealTextbox);
             this.groupBox2.Controls.Add(this.ExtremeGodmodeCheckbox);
             this.groupBox2.Controls.Add(this.AutoHealCheckBox);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(12, 180);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(336, 71);
+            this.groupBox2.Size = new System.Drawing.Size(336, 118);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Health";
@@ -157,7 +164,7 @@
             // AutoHealTextbox
             // 
             this.AutoHealTextbox.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AutoHealTextbox.Location = new System.Drawing.Point(128, 20);
+            this.AutoHealTextbox.Location = new System.Drawing.Point(128, 64);
             this.AutoHealTextbox.Name = "AutoHealTextbox";
             this.AutoHealTextbox.Size = new System.Drawing.Size(31, 19);
             this.AutoHealTextbox.TabIndex = 2;
@@ -168,18 +175,19 @@
             // ExtremeGodmodeCheckbox
             // 
             this.ExtremeGodmodeCheckbox.AutoSize = true;
-            this.ExtremeGodmodeCheckbox.Location = new System.Drawing.Point(23, 44);
+            this.ExtremeGodmodeCheckbox.Location = new System.Drawing.Point(23, 88);
             this.ExtremeGodmodeCheckbox.Name = "ExtremeGodmodeCheckbox";
             this.ExtremeGodmodeCheckbox.Size = new System.Drawing.Size(155, 17);
             this.ExtremeGodmodeCheckbox.TabIndex = 1;
             this.ExtremeGodmodeCheckbox.Text = "Extreme godmode (RISKY)";
             this.ExtremeGodmodeCheckbox.UseVisualStyleBackColor = true;
             this.ExtremeGodmodeCheckbox.CheckedChanged += new System.EventHandler(this.ExtremeGodmode_CheckedChanged);
+            this.ExtremeGodmodeCheckbox.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // AutoHealCheckBox
             // 
             this.AutoHealCheckBox.AutoSize = true;
-            this.AutoHealCheckBox.Location = new System.Drawing.Point(23, 21);
+            this.AutoHealCheckBox.Location = new System.Drawing.Point(23, 65);
             this.AutoHealCheckBox.Name = "AutoHealCheckBox";
             this.AutoHealCheckBox.Size = new System.Drawing.Size(165, 17);
             this.AutoHealCheckBox.TabIndex = 0;
@@ -195,25 +203,59 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.DestroyLastUsedButton);
+            this.groupBox3.Controls.Add(this.VehicleHealthTrackbar);
             this.groupBox3.Controls.Add(this.VehicleGodmodeCheckbox);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(12, 269);
+            this.groupBox3.Location = new System.Drawing.Point(12, 304);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(336, 71);
+            this.groupBox3.Size = new System.Drawing.Size(336, 101);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Vehicle";
+            this.groupBox3.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // VehicleGodmodeCheckbox
             // 
             this.VehicleGodmodeCheckbox.AutoSize = true;
-            this.VehicleGodmodeCheckbox.Location = new System.Drawing.Point(23, 31);
+            this.VehicleGodmodeCheckbox.Location = new System.Drawing.Point(23, 68);
             this.VehicleGodmodeCheckbox.Name = "VehicleGodmodeCheckbox";
             this.VehicleGodmodeCheckbox.Size = new System.Drawing.Size(77, 17);
             this.VehicleGodmodeCheckbox.TabIndex = 0;
             this.VehicleGodmodeCheckbox.Text = "Godmode";
             this.VehicleGodmodeCheckbox.UseVisualStyleBackColor = true;
             this.VehicleGodmodeCheckbox.CheckedChanged += new System.EventHandler(this.VehicleGodmodeCheckbox_CheckedChanged);
+            this.VehicleGodmodeCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // VehicleHealthTrackbar
+            // 
+            this.VehicleHealthTrackbar.Location = new System.Drawing.Point(23, 21);
+            this.VehicleHealthTrackbar.Name = "VehicleHealthTrackbar";
+            this.VehicleHealthTrackbar.Size = new System.Drawing.Size(287, 45);
+            this.VehicleHealthTrackbar.TabIndex = 7;
+            this.VehicleHealthTrackbar.Scroll += new System.EventHandler(this.VehicleHealthTrackbar_Scroll);
+            this.VehicleHealthTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // DestroyLastUsedButton
+            // 
+            this.DestroyLastUsedButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DestroyLastUsedButton.Location = new System.Drawing.Point(235, 64);
+            this.DestroyLastUsedButton.Name = "DestroyLastUsedButton";
+            this.DestroyLastUsedButton.Size = new System.Drawing.Size(75, 23);
+            this.DestroyLastUsedButton.TabIndex = 8;
+            this.DestroyLastUsedButton.Text = "Destroy";
+            this.DestroyLastUsedButton.UseVisualStyleBackColor = true;
+            this.DestroyLastUsedButton.Click += new System.EventHandler(this.DestroyLastUsedButton_Click);
+            this.DestroyLastUsedButton.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // HealthTrackbar
+            // 
+            this.HealthTrackbar.Location = new System.Drawing.Point(23, 21);
+            this.HealthTrackbar.Name = "HealthTrackbar";
+            this.HealthTrackbar.Size = new System.Drawing.Size(287, 45);
+            this.HealthTrackbar.TabIndex = 9;
+            this.HealthTrackbar.Scroll += new System.EventHandler(this.HealthTrackbar_Scroll);
+            this.HealthTrackbar.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // Form1
             // 
@@ -234,7 +276,7 @@
             this.Name = "Form1";
             this.Opacity = 0.5D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EnrageR | Pre-Release BUILD 4";
+            this.Text = "EnrageR | Pre-Release BUILD 5";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseHover += new System.EventHandler(this.OnHover);
@@ -246,6 +288,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -268,6 +312,9 @@
         private System.Windows.Forms.CheckBox ExtremeGodmodeCheckbox;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox VehicleGodmodeCheckbox;
+        private System.Windows.Forms.TrackBar VehicleHealthTrackbar;
+        private System.Windows.Forms.Button DestroyLastUsedButton;
+        private System.Windows.Forms.TrackBar HealthTrackbar;
     }
 }
 

@@ -11,6 +11,7 @@ namespace EnrageR.Models
     class Vehicle
     {
         private Int64 VehicleAddy;
+        private Int64 LastKnownVehicleAddy; //Only gets value -1 on init
         private GTA Gta;
         private Thread AutoRepairThread;
         private float Health;
@@ -18,6 +19,7 @@ namespace EnrageR.Models
         public Vehicle(GTA gta)
         {
             Gta = gta;
+            LastKnownVehicleAddy = -1;
             GetVehicleAddy();
             AutoRepairThread = new Thread(new ThreadStart(AutoRepair));
         }
@@ -34,6 +36,8 @@ namespace EnrageR.Models
                 VehicleAddy = -1;
                 return;
             }
+
+            LastKnownVehicleAddy = VehicleAddy;
         }
         public float GetHealth()
         {
@@ -48,6 +52,13 @@ namespace EnrageR.Models
             if (VehicleAddy == -1) return;
             Gta.WriteFloat(VehicleAddy, health);
             Health = health;
+        }
+        public void DestroyLastUsed()
+        {
+            if (LastKnownVehicleAddy == -1) return;
+            DisableAutoRepair();
+            Gta.WriteFloat(LastKnownVehicleAddy, -500);
+            LastKnownVehicleAddy = -1;
         }
         public void EnableAutoRepair()
         {

@@ -55,6 +55,7 @@ namespace EnrageR.Models
         public void DisableAutoHeal()
         {
             AutoHealThread.Abort();
+            SetHealth(200);
         }
         private void AutoHeal(object parms)
         {

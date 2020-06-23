@@ -21,6 +21,7 @@ namespace EnrageR
         private Vehicle Vehicle;
         private Hook KeyboardHook;
         private GTA Gta;
+        private Thread UIUpdaterThread;
 
         public Form1()
         {
@@ -32,6 +33,8 @@ namespace EnrageR
             Gta = new GTA();
             Player = new Player(Gta);
             Vehicle = new Vehicle(Gta);
+            UIUpdaterThread = new Thread(new ThreadStart(UpdateUIElements));
+            UIUpdaterThread.Start();
             foreach (var scrn in Screen.AllScreens)
                 if (scrn.Bounds.Contains(this.Location)) this.Location = new Point(scrn.Bounds.Right - this.Width, scrn.Bounds.Top);
             WindowState = FormWindowState.Minimized;
@@ -46,6 +49,7 @@ namespace EnrageR
             TeleportBox.SelectedIndex = 0;
         }
 
+        #region events
         private void KeyPress(KeyboardHookEventArgs e)
         {
             if (e.isAltPressed)
@@ -92,25 +96,6 @@ namespace EnrageR
             if (res.ToString() == "Yes")
             {
                 Environment.Exit(0);
-            }
-        }
-
-
-        /// <summary>
-        /// Mouse drag moves form
-        /// </summary>
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
 
@@ -168,5 +153,68 @@ namespace EnrageR
             if (VehicleGodmodeCheckbox.Checked) Vehicle.EnableAutoRepair();
             else Vehicle.DisableAutoRepair();
         }
+        private void VehicleHealthTrackbar_Scroll(object sender, EventArgs e)
+        {
+            Vehicle.SetHealth(VehicleHealthTrackbar.Value * 100);
+        }
+        private void HealthTrackbar_Scroll(object sender, EventArgs e)
+        {
+            Player.SetHealth(HealthTrackbar.Value * 10 + 100);
+        }
+        private void DestroyLastUsedButton_Click(object sender, EventArgs e)
+        {
+            Vehicle.DestroyLastUsed();
+            VehicleGodmodeCheckbox.Checked = false;
+        }
+
+        /// <summary>
+        /// Mouse drag moves form
+        /// </summary>
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        #endregion
+        #region threads
+        private void UpdateUIElements()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                //Update Player health
+                var health = Player.GetHealth();
+                if (health > 200 || health < 100)
+                    HealthTrackbar.Invoke(new Action(() => HealthTrackbar.Enabled = false));
+                else
+                    HealthTrackbar.Invoke(new Action(() =>
+                    {
+                        HealthTrackbar.Enabled = true;
+                        HealthTrackbar.Value = (int)Math.Floor((health - 100.0) / 10.0);
+                    }));
+
+                //Update Vehicle Health
+                var vehHealth = Vehicle.GetHealth();
+                if (vehHealth < 0)
+                    VehicleHealthTrackbar.Invoke(new Action(() => VehicleHealthTrackbar.Enabled = false));
+                else
+                    VehicleHealthTrackbar.Invoke(new Action(() =>
+                    {
+                        VehicleHealthTrackbar.Enabled = true;
+                        VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
+                    }));
+            }
+        }
+        #endregion
     }
 }
