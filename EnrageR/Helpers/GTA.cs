@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using EnrageR;
+using EnrageR.Models;
 
 namespace EnrageR.Helpers
 {
@@ -21,6 +21,7 @@ namespace EnrageR.Helpers
         #endregion
 
         public Process GtaProc { get; set; }
+        public long CPedFactory { get; set; }
         public long XAxisAddy { get; set; }
         public long YAxisAddy { get; set; }
         public long ZAxisAddy { get; set; }
@@ -32,6 +33,8 @@ namespace EnrageR.Helpers
 
             new Thread(new ThreadStart(CheckProcessAlive)).Start();
 
+            GetWorldAddy();
+
             ResolveAddies();
         }
         
@@ -41,6 +44,11 @@ namespace EnrageR.Helpers
             var proc = Process.GetProcessesByName(procName);
             if (proc.Any()) return proc[0];
             else return null;
+        }
+        private void GetWorldAddy()
+        {
+            var fact = new CPedFactory(this);
+            CPedFactory = ReadInt64((long)fact.Addy);
         }
         private void ResolveAddies()
         {
@@ -101,6 +109,13 @@ namespace EnrageR.Helpers
             IntPtr ByteRead;
             ReadProcessMemory(GtaProc.Handle, addr, Buffer, sizeof(byte), out ByteRead);
             return Buffer[0];
+        }
+        public byte[] ReadByteArray(long address, int length)
+        {
+            byte[] buffer = new byte[length];
+            IntPtr ByteRead;
+            ReadProcessMemory(GtaProc.Handle, address, buffer, (ulong)length, out ByteRead);
+            return buffer;
         }
         public string ReadString(long addr)
         {

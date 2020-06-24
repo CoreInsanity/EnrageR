@@ -102,7 +102,9 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GTA.cs" />
+    <Compile Include="Helpers\PatternScan.cs" />
     <Compile Include="Keyboard\Keyboard.cs" />
+    <Compile Include="Models\CPedFactory.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Vehicle.cs" />
