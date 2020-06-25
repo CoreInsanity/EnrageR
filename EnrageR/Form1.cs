@@ -32,7 +32,6 @@ namespace EnrageR
         {
             Gta = new GTA();
             Player = new Player(Gta);
-            Vehicle = new Vehicle(Gta);
             UIUpdaterThread = new Thread(new ThreadStart(UpdateUIElements));
             UIUpdaterThread.Start();
             foreach (var scrn in Screen.AllScreens)
@@ -55,7 +54,7 @@ namespace EnrageR
             if (e.isAltPressed)
             {
                 Trace.WriteLine("Healing...");
-                Player.SetHealth(200);
+                Player.Health = 200;
                 return;
             }
 
@@ -63,7 +62,7 @@ namespace EnrageR
             {
                 var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
                 if (loc == null) return;
-                Player.SetLocation(loc);
+                Player.Location = loc;
             }
 
             if (e.Key == Keys.F10)
@@ -101,14 +100,11 @@ namespace EnrageR
 
         private void TeleportButton_Click(object sender, EventArgs e)
         {
-            var loccc = Player.GetLocation();
             var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
             if (loc == null) return;
-            Player.SetLocation(loc);
+            Player.Location = loc;
 
             WindowState = FormWindowState.Minimized;
-            Thread.Sleep(50);
-            new Keyboard.Keyboard().Send(Keyboard.Keyboard.ScanCodeShort.LCONTROL);
         }
 
         private void OnHover(object sender, EventArgs e)
@@ -125,7 +121,7 @@ namespace EnrageR
         private void OnLeave()
         {
             sec = 0;
-            for (double i = Opacity * 100; i >= 50; i--)
+            for (double i = Opacity * 100; i >= 70; i--)
             {
                 Opacity = i / 100.0;
                 Thread.Sleep(5);
@@ -159,7 +155,7 @@ namespace EnrageR
         }
         private void HealthTrackbar_Scroll(object sender, EventArgs e)
         {
-            Player.SetHealth(HealthTrackbar.Value * 10 + 100);
+            Player.Health = HealthTrackbar.Value * 10 + 100;
         }
         private void DestroyLastUsedButton_Click(object sender, EventArgs e)
         {
@@ -193,26 +189,25 @@ namespace EnrageR
                 Thread.Sleep(1000);
 
                 //Update Player health
-                var health = Player.GetHealth();
-                if (health > 200 || health < 100)
+                if (Player.Health > 200 || Player.Health < 100)
                     HealthTrackbar.Invoke(new Action(() => HealthTrackbar.Enabled = false));
                 else
                     HealthTrackbar.Invoke(new Action(() =>
                     {
                         HealthTrackbar.Enabled = true;
-                        HealthTrackbar.Value = (int)Math.Floor((health - 100.0) / 10.0);
+                        HealthTrackbar.Value = (int)Math.Floor((Player.Health - 100.0) / 10.0);
                     }));
 
                 //Update Vehicle Health
-                var vehHealth = Vehicle.GetHealth();
-                if (vehHealth < 0)
-                    VehicleHealthTrackbar.Invoke(new Action(() => VehicleHealthTrackbar.Enabled = false));
-                else
-                    VehicleHealthTrackbar.Invoke(new Action(() =>
-                    {
-                        VehicleHealthTrackbar.Enabled = true;
-                        VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
-                    }));
+                //var vehHealth = Vehicle.GetHealth();
+                //if (vehHealth < 0)
+                //    VehicleHealthTrackbar.Invoke(new Action(() => VehicleHealthTrackbar.Enabled = false));
+                //else
+                //    VehicleHealthTrackbar.Invoke(new Action(() =>
+                //    {
+                //        VehicleHealthTrackbar.Enabled = true;
+                //        VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
+                //    }));
             }
         }
         #endregion

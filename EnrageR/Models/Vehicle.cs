@@ -16,7 +16,7 @@ namespace EnrageR.Models
         private Thread AutoRepairThread;
         private float Health;
 
-        public Vehicle(GTA gta)
+        public Vehicle(GTA gta, long addy)
         {
             Gta = gta;
             LastKnownVehicleAddy = -1;

@@ -22,10 +22,6 @@ namespace EnrageR.Helpers
 
         public Process GtaProc { get; set; }
         public long CPedFactory { get; set; }
-        public long XAxisAddy { get; set; }
-        public long YAxisAddy { get; set; }
-        public long ZAxisAddy { get; set; }
-        public long HealthAddy { get; set; }
 
         public GTA()
         {
@@ -34,8 +30,6 @@ namespace EnrageR.Helpers
             new Thread(new ThreadStart(CheckProcessAlive)).Start();
 
             GetWorldAddy();
-
-            ResolveAddies();
         }
         
 
@@ -49,34 +43,6 @@ namespace EnrageR.Helpers
         {
             var fact = new CPedFactory(this);
             CPedFactory = ReadInt64((long)fact.Addy);
-        }
-        private void ResolveAddies()
-        {
-            //Get XPos Addy
-            XAxisAddy = (long)GtaProc.MainModule.BaseAddress + 0x024ACB48;
-            XAxisAddy = ReadInt64(XAxisAddy) + 0x8;
-            XAxisAddy = ReadInt64(XAxisAddy) + 0x30;
-            XAxisAddy = ReadInt64(XAxisAddy) + 0x50;
-
-            //Get YPos Addy
-            YAxisAddy = (long)GtaProc.MainModule.BaseAddress + 0x02E00990;
-            YAxisAddy = ReadInt64(YAxisAddy) + 0x10;
-            YAxisAddy = ReadInt64(YAxisAddy) + 0x4F8;
-            YAxisAddy = ReadInt64(YAxisAddy) + 0x5B0;
-            YAxisAddy = ReadInt64(YAxisAddy) + 0x30;
-            YAxisAddy = ReadInt64(YAxisAddy) + 0x54;
-
-            //Get ZPos Addy
-            ZAxisAddy = (long)GtaProc.MainModule.BaseAddress + 0x024AC5A8;
-            ZAxisAddy = ReadInt64(ZAxisAddy) + 0x0;
-            ZAxisAddy = ReadInt64(ZAxisAddy) + 0x1C8;
-            ZAxisAddy = ReadInt64(ZAxisAddy) + 0xF8;
-            ZAxisAddy = ReadInt64(ZAxisAddy) + 0x30;
-            ZAxisAddy = ReadInt64(ZAxisAddy) + 0x58;
-
-            //Get Health Addy
-            HealthAddy = (long)GtaProc.MainModule.BaseAddress + 0x01C58DA0;
-            HealthAddy = ReadInt64(HealthAddy) + 0x280;
         }
 
         #region reading

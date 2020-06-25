@@ -11,42 +11,91 @@ namespace EnrageR.Models
 {
     class Player
     {
-        private float Health;
         private GTA Gta;
-        private Location Location;
+        private long PlayerAddy;
+        private long PlayerInfoAddy;
         private Thread AutoHealThread;
+        public Vehicle LastVehicle;
 
         public Player(GTA gta)
         {
             Gta = gta;
             AutoHealThread = new Thread(new ParameterizedThreadStart(AutoHeal));
+            PlayerAddy = Gta.ReadInt64(Gta.CPedFactory + 0x8);
+            PlayerInfoAddy = Gta.ReadInt64(PlayerAddy + 0x10B8);
         }
-        public Location GetLocation()
+        public Location Location
         {
-            Location = new Location(
-                Gta.ReadFloat(Gta.XAxisAddy),
-                Gta.ReadFloat(Gta.YAxisAddy),
-                Gta.ReadFloat(Gta.ZAxisAddy),
-                Locations.Grapeseed);
-            return Location;
+            get 
+            {
+                return new Location(Gta.ReadFloat(PlayerAddy + 0x90), Gta.ReadFloat(PlayerAddy + 0x94), Gta.ReadFloat(PlayerAddy + 0x98), Locations.LSAirport);
+            }
+            set
+            {
+                var radar = Gta.ReadInt64(PlayerAddy + 0x30);
+                Gta.WriteFloat(radar + 0x50, value.X);
+                Gta.WriteFloat(radar + 0x54, value.Y);
+                Gta.WriteFloat(radar + 0x58, value.Z);
+            }
         }
-        public void SetLocation(Location loc)
+        public float Health
         {
-            Gta.WriteFloat(Gta.XAxisAddy, loc.X);
-            Gta.WriteFloat(Gta.YAxisAddy, loc.Y);
-            Gta.WriteFloat(Gta.ZAxisAddy, loc.Z);
-            Location = loc;
+            get
+            {
+                return Gta.ReadFloat(PlayerAddy + 0x280);
+            }
+            set
+            {
+                if (value > 0) Gta.WriteFloat(PlayerAddy + 0x280, value);
+            }
         }
-        public void SetHealth(float value)
+        public bool IsInVehicle
         {
-            Gta.WriteFloat(Gta.HealthAddy, value);
-            Health = value;
+            get
+            {
+                if (Gta.ReadByte(PlayerAddy + 0x146B) == 12) return true;
+                else return false;
+            }
         }
-        public double GetHealth()
+        public string Name
         {
-            Health = Gta.ReadFloat(Gta.HealthAddy);
-            return Health;
+            get
+            {
+                return Gta.ReadString(PlayerInfoAddy + 0x7C);
+            }
         }
+        public float RunSpeed
+        {
+            get
+            {
+                return Gta.ReadFloat(PlayerInfoAddy + 0x14C);
+            }
+            set
+            {
+                Gta.WriteFloat(PlayerInfoAddy + 0x14C, value);
+            }
+        }
+        public float SwimSpeed
+        {
+            get
+            {
+                return Gta.ReadFloat(PlayerInfoAddy + 0x148);
+            }
+            set
+            {
+                Gta.WriteFloat(PlayerInfoAddy + 0x148, value);
+            }
+        }
+        public Vehicle CurrentVehicle
+        {
+            get
+            {
+                if (!IsInVehicle) return null;
+                LastVehicle = new Vehicle(Gta, Gta.ReadInt64(PlayerAddy + 0xD28));
+                return LastVehicle;
+            }
+        }
+
         public void EnableAutoHeal(int delay, float health)
         {
             AutoHealThread = new Thread(new ParameterizedThreadStart(AutoHeal));
@@ -55,15 +104,17 @@ namespace EnrageR.Models
         public void DisableAutoHeal()
         {
             AutoHealThread.Abort();
-            SetHealth(200);
+            Health = 200;
         }
+
+
         private void AutoHeal(object parms)
         {
             var parmsCast = (HealingParms)parms;
             while (true)
             {
                 
-                if (GetHealth() < parmsCast.Health) SetHealth(parmsCast.Health);
+                if (Health < parmsCast.Health) Health = parmsCast.Health;
                 Thread.Sleep(parmsCast.Delay);
             }
         }

@@ -39,22 +39,22 @@
             this.TeleportButton = new System.Windows.Forms.Button();
             this.TeleportBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.HealthTrackbar = new System.Windows.Forms.TrackBar();
             this.AutoHealTextbox = new System.Windows.Forms.TextBox();
             this.ExtremeGodmodeCheckbox = new System.Windows.Forms.CheckBox();
             this.AutoHealCheckBox = new System.Windows.Forms.CheckBox();
             this.CloseTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.VehicleGodmodeCheckbox = new System.Windows.Forms.CheckBox();
-            this.VehicleHealthTrackbar = new System.Windows.Forms.TrackBar();
             this.DestroyLastUsedButton = new System.Windows.Forms.Button();
-            this.HealthTrackbar = new System.Windows.Forms.TrackBar();
+            this.VehicleHealthTrackbar = new System.Windows.Forms.TrackBar();
+            this.VehicleGodmodeCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).BeginInit();
             this.SuspendLayout();
             // 
             // ExitImage
@@ -161,6 +161,15 @@
             this.groupBox2.Text = "Health";
             this.groupBox2.MouseHover += new System.EventHandler(this.OnHover);
             // 
+            // HealthTrackbar
+            // 
+            this.HealthTrackbar.Location = new System.Drawing.Point(23, 21);
+            this.HealthTrackbar.Name = "HealthTrackbar";
+            this.HealthTrackbar.Size = new System.Drawing.Size(287, 45);
+            this.HealthTrackbar.TabIndex = 9;
+            this.HealthTrackbar.Scroll += new System.EventHandler(this.HealthTrackbar_Scroll);
+            this.HealthTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            // 
             // AutoHealTextbox
             // 
             this.AutoHealTextbox.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -206,6 +215,7 @@
             this.groupBox3.Controls.Add(this.DestroyLastUsedButton);
             this.groupBox3.Controls.Add(this.VehicleHealthTrackbar);
             this.groupBox3.Controls.Add(this.VehicleGodmodeCheckbox);
+            this.groupBox3.Enabled = false;
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(12, 304);
             this.groupBox3.Name = "groupBox3";
@@ -214,27 +224,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Vehicle";
             this.groupBox3.MouseHover += new System.EventHandler(this.OnHover);
-            // 
-            // VehicleGodmodeCheckbox
-            // 
-            this.VehicleGodmodeCheckbox.AutoSize = true;
-            this.VehicleGodmodeCheckbox.Location = new System.Drawing.Point(23, 68);
-            this.VehicleGodmodeCheckbox.Name = "VehicleGodmodeCheckbox";
-            this.VehicleGodmodeCheckbox.Size = new System.Drawing.Size(77, 17);
-            this.VehicleGodmodeCheckbox.TabIndex = 0;
-            this.VehicleGodmodeCheckbox.Text = "Godmode";
-            this.VehicleGodmodeCheckbox.UseVisualStyleBackColor = true;
-            this.VehicleGodmodeCheckbox.CheckedChanged += new System.EventHandler(this.VehicleGodmodeCheckbox_CheckedChanged);
-            this.VehicleGodmodeCheckbox.MouseHover += new System.EventHandler(this.OnHover);
-            // 
-            // VehicleHealthTrackbar
-            // 
-            this.VehicleHealthTrackbar.Location = new System.Drawing.Point(23, 21);
-            this.VehicleHealthTrackbar.Name = "VehicleHealthTrackbar";
-            this.VehicleHealthTrackbar.Size = new System.Drawing.Size(287, 45);
-            this.VehicleHealthTrackbar.TabIndex = 7;
-            this.VehicleHealthTrackbar.Scroll += new System.EventHandler(this.VehicleHealthTrackbar_Scroll);
-            this.VehicleHealthTrackbar.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // DestroyLastUsedButton
             // 
@@ -248,14 +237,26 @@
             this.DestroyLastUsedButton.Click += new System.EventHandler(this.DestroyLastUsedButton_Click);
             this.DestroyLastUsedButton.MouseHover += new System.EventHandler(this.OnHover);
             // 
-            // HealthTrackbar
+            // VehicleHealthTrackbar
             // 
-            this.HealthTrackbar.Location = new System.Drawing.Point(23, 21);
-            this.HealthTrackbar.Name = "HealthTrackbar";
-            this.HealthTrackbar.Size = new System.Drawing.Size(287, 45);
-            this.HealthTrackbar.TabIndex = 9;
-            this.HealthTrackbar.Scroll += new System.EventHandler(this.HealthTrackbar_Scroll);
-            this.HealthTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            this.VehicleHealthTrackbar.Location = new System.Drawing.Point(23, 21);
+            this.VehicleHealthTrackbar.Name = "VehicleHealthTrackbar";
+            this.VehicleHealthTrackbar.Size = new System.Drawing.Size(287, 45);
+            this.VehicleHealthTrackbar.TabIndex = 7;
+            this.VehicleHealthTrackbar.Scroll += new System.EventHandler(this.VehicleHealthTrackbar_Scroll);
+            this.VehicleHealthTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // VehicleGodmodeCheckbox
+            // 
+            this.VehicleGodmodeCheckbox.AutoSize = true;
+            this.VehicleGodmodeCheckbox.Location = new System.Drawing.Point(23, 68);
+            this.VehicleGodmodeCheckbox.Name = "VehicleGodmodeCheckbox";
+            this.VehicleGodmodeCheckbox.Size = new System.Drawing.Size(77, 17);
+            this.VehicleGodmodeCheckbox.TabIndex = 0;
+            this.VehicleGodmodeCheckbox.Text = "Godmode";
+            this.VehicleGodmodeCheckbox.UseVisualStyleBackColor = true;
+            this.VehicleGodmodeCheckbox.CheckedChanged += new System.EventHandler(this.VehicleGodmodeCheckbox_CheckedChanged);
+            this.VehicleGodmodeCheckbox.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // Form1
             // 
@@ -274,9 +275,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Opacity = 0.5D;
+            this.Opacity = 0.7D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EnrageR | Pre-Release BUILD 5";
+            this.Text = "EnrageR | Pre-Release BUILD 6";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseHover += new System.EventHandler(this.OnHover);
@@ -286,10 +287,10 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
