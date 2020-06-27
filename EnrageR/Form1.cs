@@ -42,12 +42,19 @@ namespace EnrageR
             KeyboardHook.KeyUpEvent += KeyPress;
 
             MarqueeTimer.Start();
+            InitializeTooltips();
 
             foreach (var location in Models.Location.GetLocations())
                 TeleportBox.Items.Add(location.Name);
             TeleportBox.SelectedIndex = 0;
         }
-
+        private void InitializeTooltips()
+        {
+            new ToolTip().SetToolTip(VehicleHealthTrackbar, "Vehicle engine health");
+            new ToolTip().SetToolTip(VehicleAccelerationTrackbar, "Vehicle acceleration");
+            new ToolTip().SetToolTip(DestroyLastUsedButton, "Destroy current/last used vehicle");
+            new ToolTip().SetToolTip(VehicleGravityTrackbar, "Set gravity of vehicle");
+        }
         #region events
         private void KeyPress(KeyboardHookEventArgs e)
         {
@@ -111,21 +118,18 @@ namespace EnrageR
         {
             if (!CloseTimer.Enabled) CloseTimer.Start();
             sec = 0;
-            for (double i = Opacity * 100; i <= 100; i++)
-            {
-                Opacity = i / 100.0;
-                Thread.Sleep(1);
-            }
+            Opacity = 1;
         }
 
         private void OnLeave()
         {
             sec = 0;
-            for (double i = Opacity * 100; i >= 80; i--)
-            {
-                Opacity = i / 100.0;
-                Thread.Sleep(5);
-            }
+            Opacity = 1;
+            //for (double i = Opacity * 100; i >= 80; i--)
+            //{
+            //    Opacity = i / 100.0;
+            //    Thread.Sleep(75);
+            //}
         }
         int sec = 0;
         private void CloseTimer_Tick(object sender, EventArgs e)
@@ -169,6 +173,12 @@ namespace EnrageR
         private void VehicleAccelerationTrackbar_Scroll(object sender, EventArgs e)
         {
             if (Player.IsInVehicle) Player.CurrentVehicle.Acceleration = VehicleAccelerationTrackbar.Value;
+        }
+        private void VehicleGravityTrackbar_Scroll(object sender, EventArgs e)
+        {
+            var gravity = Player.CurrentVehicle.Gravity;
+            if (gravity == 10) gravity = 9.8f;
+            if (Player.IsInVehicle) Player.CurrentVehicle.Gravity = VehicleGravityTrackbar.Value;
         }
         private void HealthTrackbar_Scroll(object sender, EventArgs e)
         {
@@ -217,20 +227,31 @@ namespace EnrageR
                 //Update Vehicle Health
                 if (Player.IsInVehicle)
                 {
-                    var vehHealth = Player.CurrentVehicle.EngineHealth;
+                    var vehicle = Player.CurrentVehicle;
+                    if (vehicle == null) return; //Workaround for a weird bug that I'm too tired to care about
+                    var vehHealth = vehicle.EngineHealth;
                     if (vehHealth < 1) vehHealth = 0;
-                    var vehAcceleration = Player.CurrentVehicle.Acceleration;
+
                     VehicleGroupBox.Invoke(new Action(() =>
                     {
                         VehicleHealthTrackbar.Enabled = true;
                         VehicleAccelerationTrackbar.Enabled = true;
+                        VehicleGravityTrackbar.Enabled = true;
 
                         CollisionDamageCheckbox.Enabled = true;
                         EngineDamageCheckbox.Enabled = true;
                         WeaponDamageCheckbox.Enabled = true;
 
-                        VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
-                        VehicleAccelerationTrackbar.Value = (int)Math.Floor(vehAcceleration);
+                        try
+                        {
+                            VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
+                            VehicleAccelerationTrackbar.Value = (int)Math.Floor(vehicle.Acceleration);
+                            VehicleGravityTrackbar.Value = (int)Math.Ceiling(vehicle.Gravity);
+                        }
+                        catch (Exception ex)
+                        {
+                            Trace.WriteLine(ex.Message);
+                        }
                     }));
                 }
                 else
@@ -239,11 +260,12 @@ namespace EnrageR
                     {
                         VehicleHealthTrackbar.Enabled = false;
                         VehicleAccelerationTrackbar.Enabled = false;
+                        VehicleGravityTrackbar.Enabled = false;
 
                         CollisionDamageCheckbox.Checked = false;
                         EngineDamageCheckbox.Checked = false;
                         WeaponDamageCheckbox.Checked = false;
-                        
+
                         CollisionDamageCheckbox.Enabled = false;
                         EngineDamageCheckbox.Enabled = false;
                         WeaponDamageCheckbox.Enabled = false;

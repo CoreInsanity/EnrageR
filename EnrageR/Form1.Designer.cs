@@ -51,6 +51,7 @@
             this.CollisionDamageCheckbox = new System.Windows.Forms.CheckBox();
             this.WeaponDamageCheckbox = new System.Windows.Forms.CheckBox();
             this.VehicleAccelerationTrackbar = new System.Windows.Forms.TrackBar();
+            this.VehicleGravityTrackbar = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -59,6 +60,7 @@
             this.VehicleGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleAccelerationTrackbar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleGravityTrackbar)).BeginInit();
             this.SuspendLayout();
             // 
             // ExitImage
@@ -101,9 +103,10 @@
             // MarqueeLabel
             // 
             this.MarqueeLabel.AutoSize = true;
-            this.MarqueeLabel.Location = new System.Drawing.Point(212, 511);
+            this.MarqueeLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MarqueeLabel.Location = new System.Drawing.Point(213, 494);
             this.MarqueeLabel.Name = "MarqueeLabel";
-            this.MarqueeLabel.Size = new System.Drawing.Size(196, 13);
+            this.MarqueeLabel.Size = new System.Drawing.Size(211, 13);
             this.MarqueeLabel.TabIndex = 3;
             this.MarqueeLabel.Text = "RageMP Cheats by MushtarioPepperoni";
             this.MarqueeLabel.MouseHover += new System.EventHandler(this.OnHover);
@@ -117,7 +120,7 @@
             this.groupBox1.Controls.Add(this.TeleportButton);
             this.groupBox1.Controls.Add(this.TeleportBox);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 93);
+            this.groupBox1.Location = new System.Drawing.Point(12, 75);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(336, 81);
             this.groupBox1.TabIndex = 4;
@@ -157,7 +160,7 @@
             this.groupBox2.Controls.Add(this.ExtremeGodmodeCheckbox);
             this.groupBox2.Controls.Add(this.AutoHealCheckBox);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(12, 180);
+            this.groupBox2.Location = new System.Drawing.Point(12, 162);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(336, 118);
             this.groupBox2.TabIndex = 5;
@@ -216,6 +219,7 @@
             // 
             // VehicleGroupBox
             // 
+            this.VehicleGroupBox.Controls.Add(this.VehicleGravityTrackbar);
             this.VehicleGroupBox.Controls.Add(this.VehicleAccelerationTrackbar);
             this.VehicleGroupBox.Controls.Add(this.WeaponDamageCheckbox);
             this.VehicleGroupBox.Controls.Add(this.CollisionDamageCheckbox);
@@ -223,7 +227,7 @@
             this.VehicleGroupBox.Controls.Add(this.VehicleHealthTrackbar);
             this.VehicleGroupBox.Controls.Add(this.EngineDamageCheckbox);
             this.VehicleGroupBox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VehicleGroupBox.Location = new System.Drawing.Point(12, 304);
+            this.VehicleGroupBox.Location = new System.Drawing.Point(12, 286);
             this.VehicleGroupBox.Name = "VehicleGroupBox";
             this.VehicleGroupBox.Size = new System.Drawing.Size(336, 204);
             this.VehicleGroupBox.TabIndex = 6;
@@ -234,7 +238,7 @@
             // DestroyLastUsedButton
             // 
             this.DestroyLastUsedButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DestroyLastUsedButton.Location = new System.Drawing.Point(235, 122);
+            this.DestroyLastUsedButton.Location = new System.Drawing.Point(235, 168);
             this.DestroyLastUsedButton.Name = "DestroyLastUsedButton";
             this.DestroyLastUsedButton.Size = new System.Drawing.Size(75, 23);
             this.DestroyLastUsedButton.TabIndex = 8;
@@ -255,7 +259,7 @@
             // EngineDamageCheckbox
             // 
             this.EngineDamageCheckbox.AutoSize = true;
-            this.EngineDamageCheckbox.Location = new System.Drawing.Point(23, 119);
+            this.EngineDamageCheckbox.Location = new System.Drawing.Point(23, 134);
             this.EngineDamageCheckbox.Name = "EngineDamageCheckbox";
             this.EngineDamageCheckbox.Size = new System.Drawing.Size(124, 17);
             this.EngineDamageCheckbox.TabIndex = 0;
@@ -267,34 +271,45 @@
             // CollisionDamageCheckbox
             // 
             this.CollisionDamageCheckbox.AutoSize = true;
-            this.CollisionDamageCheckbox.Location = new System.Drawing.Point(23, 140);
+            this.CollisionDamageCheckbox.Location = new System.Drawing.Point(23, 155);
             this.CollisionDamageCheckbox.Name = "CollisionDamageCheckbox";
             this.CollisionDamageCheckbox.Size = new System.Drawing.Size(131, 17);
             this.CollisionDamageCheckbox.TabIndex = 9;
             this.CollisionDamageCheckbox.Text = "No collision damage";
             this.CollisionDamageCheckbox.UseVisualStyleBackColor = true;
             this.CollisionDamageCheckbox.CheckedChanged += new System.EventHandler(this.CollisionDamageCheckbox_CheckedChanged);
+            this.CollisionDamageCheckbox.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // WeaponDamageCheckbox
             // 
             this.WeaponDamageCheckbox.AutoSize = true;
-            this.WeaponDamageCheckbox.Location = new System.Drawing.Point(23, 161);
+            this.WeaponDamageCheckbox.Location = new System.Drawing.Point(23, 176);
             this.WeaponDamageCheckbox.Name = "WeaponDamageCheckbox";
             this.WeaponDamageCheckbox.Size = new System.Drawing.Size(130, 17);
             this.WeaponDamageCheckbox.TabIndex = 10;
             this.WeaponDamageCheckbox.Text = "No weapon damage";
             this.WeaponDamageCheckbox.UseVisualStyleBackColor = true;
             this.WeaponDamageCheckbox.CheckedChanged += new System.EventHandler(this.WeaponDamageCheckbox_CheckedChanged);
+            this.WeaponDamageCheckbox.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // VehicleAccelerationTrackbar
             // 
-            this.VehicleAccelerationTrackbar.Location = new System.Drawing.Point(23, 59);
+            this.VehicleAccelerationTrackbar.Location = new System.Drawing.Point(23, 52);
             this.VehicleAccelerationTrackbar.Minimum = 1;
             this.VehicleAccelerationTrackbar.Name = "VehicleAccelerationTrackbar";
             this.VehicleAccelerationTrackbar.Size = new System.Drawing.Size(287, 45);
             this.VehicleAccelerationTrackbar.TabIndex = 11;
             this.VehicleAccelerationTrackbar.Value = 1;
             this.VehicleAccelerationTrackbar.Scroll += new System.EventHandler(this.VehicleAccelerationTrackbar_Scroll);
+            this.VehicleAccelerationTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // VehicleGravityTrackbar
+            // 
+            this.VehicleGravityTrackbar.Location = new System.Drawing.Point(23, 84);
+            this.VehicleGravityTrackbar.Name = "VehicleGravityTrackbar";
+            this.VehicleGravityTrackbar.Size = new System.Drawing.Size(287, 45);
+            this.VehicleGravityTrackbar.TabIndex = 12;
+            this.VehicleGravityTrackbar.Scroll += new System.EventHandler(this.VehicleGravityTrackbar_Scroll);
             // 
             // Form1
             // 
@@ -302,7 +317,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(360, 530);
+            this.ClientSize = new System.Drawing.Size(360, 513);
             this.Controls.Add(this.VehicleGroupBox);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -330,6 +345,7 @@
             this.VehicleGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleAccelerationTrackbar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleGravityTrackbar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -358,6 +374,7 @@
         private System.Windows.Forms.CheckBox WeaponDamageCheckbox;
         private System.Windows.Forms.CheckBox CollisionDamageCheckbox;
         private System.Windows.Forms.TrackBar VehicleAccelerationTrackbar;
+        private System.Windows.Forms.TrackBar VehicleGravityTrackbar;
     }
 }
 
