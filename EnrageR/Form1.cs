@@ -81,11 +81,11 @@ namespace EnrageR
         {
             if (xPos >= this.Width)
             {
-                this.MarqueeLabel.Location = new System.Drawing.Point(-196, 460);
+                this.MarqueeLabel.Location = new System.Drawing.Point(-196, this.MarqueeLabel.Location.Y);
                 xPos = -196;
                 return;
             }
-            this.MarqueeLabel.Location = new System.Drawing.Point(xPos, 460);
+            this.MarqueeLabel.Location = new System.Drawing.Point(xPos, this.MarqueeLabel.Location.Y);
             xPos++;
         }
 
@@ -121,7 +121,7 @@ namespace EnrageR
         private void OnLeave()
         {
             sec = 0;
-            for (double i = Opacity * 100; i >= 70; i--)
+            for (double i = Opacity * 100; i >= 80; i--)
             {
                 Opacity = i / 100.0;
                 Thread.Sleep(5);
@@ -144,14 +144,31 @@ namespace EnrageR
             else Player.DisableAutoHeal();
         }
 
-        private void VehicleGodmodeCheckbox_CheckedChanged(object sender, EventArgs e)
+        private void EngineDamageCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (VehicleGodmodeCheckbox.Checked) Vehicle.EnableAutoRepair();
-            else Vehicle.DisableAutoRepair();
+            if (!Player.IsInVehicle) return;
+            if (EngineDamageCheckbox.Checked) Player.CurrentVehicle.EngineDamage = 0;
+            else Player.CurrentVehicle.EngineDamage = 1;
+        }
+        private void WeaponDamageCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Player.IsInVehicle) return;
+            if (WeaponDamageCheckbox.Checked) Player.CurrentVehicle.WeaponDamage = 0;
+            else Player.CurrentVehicle.WeaponDamage = 1;
+        }
+        private void CollisionDamageCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Player.IsInVehicle) return;
+            if (CollisionDamageCheckbox.Checked) Player.CurrentVehicle.CollisionDamage = 0;
+            else Player.CurrentVehicle.CollisionDamage = 1;
         }
         private void VehicleHealthTrackbar_Scroll(object sender, EventArgs e)
         {
-            Vehicle.SetHealth(VehicleHealthTrackbar.Value * 100);
+            if (Player.IsInVehicle) Player.CurrentVehicle.EngineHealth = VehicleHealthTrackbar.Value * 100;
+        }
+        private void VehicleAccelerationTrackbar_Scroll(object sender, EventArgs e)
+        {
+            if (Player.IsInVehicle) Player.CurrentVehicle.Acceleration = VehicleAccelerationTrackbar.Value;
         }
         private void HealthTrackbar_Scroll(object sender, EventArgs e)
         {
@@ -159,8 +176,7 @@ namespace EnrageR
         }
         private void DestroyLastUsedButton_Click(object sender, EventArgs e)
         {
-            Vehicle.DestroyLastUsed();
-            VehicleGodmodeCheckbox.Checked = false;
+            Player.LastVehicle.EngineHealth = -1;
         }
 
         /// <summary>
@@ -199,15 +215,41 @@ namespace EnrageR
                     }));
 
                 //Update Vehicle Health
-                //var vehHealth = Vehicle.GetHealth();
-                //if (vehHealth < 0)
-                //    VehicleHealthTrackbar.Invoke(new Action(() => VehicleHealthTrackbar.Enabled = false));
-                //else
-                //    VehicleHealthTrackbar.Invoke(new Action(() =>
-                //    {
-                //        VehicleHealthTrackbar.Enabled = true;
-                //        VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
-                //    }));
+                if (Player.IsInVehicle)
+                {
+                    var vehHealth = Player.CurrentVehicle.EngineHealth;
+                    if (vehHealth < 1) vehHealth = 0;
+                    var vehAcceleration = Player.CurrentVehicle.Acceleration;
+                    VehicleGroupBox.Invoke(new Action(() =>
+                    {
+                        VehicleHealthTrackbar.Enabled = true;
+                        VehicleAccelerationTrackbar.Enabled = true;
+
+                        CollisionDamageCheckbox.Enabled = true;
+                        EngineDamageCheckbox.Enabled = true;
+                        WeaponDamageCheckbox.Enabled = true;
+
+                        VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
+                        VehicleAccelerationTrackbar.Value = (int)Math.Floor(vehAcceleration);
+                    }));
+                }
+                else
+                {
+                    VehicleGroupBox.Invoke(new Action(() =>
+                    {
+                        VehicleHealthTrackbar.Enabled = false;
+                        VehicleAccelerationTrackbar.Enabled = false;
+
+                        CollisionDamageCheckbox.Checked = false;
+                        EngineDamageCheckbox.Checked = false;
+                        WeaponDamageCheckbox.Checked = false;
+                        
+                        CollisionDamageCheckbox.Enabled = false;
+                        EngineDamageCheckbox.Enabled = false;
+                        WeaponDamageCheckbox.Enabled = false;
+                    }));
+                    if (Player.LastVehicle != null) Player.LastVehicle.Reset();
+                }
             }
         }
         #endregion

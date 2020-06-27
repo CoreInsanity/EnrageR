@@ -10,71 +10,102 @@ namespace EnrageR.Models
 {
     class Vehicle
     {
-        private Int64 VehicleAddy;
-        private Int64 LastKnownVehicleAddy; //Only gets value -1 on init
+        private long VehicleAddy;
+        private long VehicleHandlingAddy;
         private GTA Gta;
-        private Thread AutoRepairThread;
-        private float Health;
 
         public Vehicle(GTA gta, long addy)
         {
             Gta = gta;
-            LastKnownVehicleAddy = -1;
-            GetVehicleAddy();
-            AutoRepairThread = new Thread(new ThreadStart(AutoRepair));
+            VehicleAddy = addy;
+            VehicleHandlingAddy = Gta.ReadInt64(VehicleAddy + 0x918);
         }
-        private void GetVehicleAddy()
+        public void Reset()
         {
-            VehicleAddy = (long)Gta.GtaProc.MainModule.BaseAddress + 0x01F62A08;
-            VehicleAddy = Gta.ReadInt64(VehicleAddy) + 0x18;
-            VehicleAddy = Gta.ReadInt64(VehicleAddy) + 0x10;
-            VehicleAddy = Gta.ReadInt64(VehicleAddy) + 0x8E8;
+            //TODO: Get the default values, as they're different for each vehicle
 
-            if (VehicleAddy < 50000)
+            Gravity = 9.8f;
+            Acceleration = 1f;
+            EngineDamage = 1f;
+            CollisionDamage = 1f;
+            WeaponDamage = 1f;
+            DeformationDamage = 1f;
+        }
+        public float Gravity
+        {
+            get
             {
-                //Assuming player is not in vehicle
-                VehicleAddy = -1;
-                return;
+                return Gta.ReadFloat(VehicleAddy + 0xC3C);
             }
-
-            LastKnownVehicleAddy = VehicleAddy;
-        }
-        public float GetHealth()
-        {
-            GetVehicleAddy();
-            if (VehicleAddy == -1) return -1;
-            Health = Gta.ReadFloat(VehicleAddy);
-            return Health;
-        }
-        public void SetHealth(float health)
-        {
-            GetVehicleAddy();
-            if (VehicleAddy == -1) return;
-            Gta.WriteFloat(VehicleAddy, health);
-            Health = health;
-        }
-        public void DestroyLastUsed()
-        {
-            if (LastKnownVehicleAddy == -1) return;
-            DisableAutoRepair();
-            Gta.WriteFloat(LastKnownVehicleAddy, -500);
-            LastKnownVehicleAddy = -1;
-        }
-        public void EnableAutoRepair()
-        {
-            AutoRepairThread = new Thread(new ThreadStart(AutoRepair));
-            AutoRepairThread.Start();
-        }
-        public void DisableAutoRepair()
-        {
-            AutoRepairThread.Abort();
-        }
-        private void AutoRepair()
-        {
-            while (true)
+            set
             {
-                if (GetHealth() < 1000) SetHealth(1000);
-                Thread.Sleep(100);
+                Gta.WriteFloat(VehicleAddy + 0xC3C, value);
+            }
+        }
+        public float Acceleration
+        {
+            get
+            {
+                return Gta.ReadFloat(VehicleHandlingAddy + 0x4C);
+            }
+            set
+            {
+                Gta.WriteFloat(VehicleHandlingAddy + 0x4C, value);
+            }
+        }
+        public float EngineHealth
+        {
+            get
+            {
+                return Gta.ReadFloat(VehicleAddy + 0x8E8);
+            }
+            set
+            {
+                Gta.WriteFloat(VehicleAddy + 0x8E8, value);
+            }
+        }
+        public float EngineDamage
+        {
+            get
+            {
+                return Gta.ReadFloat(VehicleHandlingAddy + 0xFC);
+            }
+            set
+            {
+                Gta.WriteFloat(VehicleHandlingAddy + 0xFC, value);
+            }
+        }
+        public float CollisionDamage
+        {
+            get
+            {
+                return Gta.ReadFloat(VehicleHandlingAddy + 0xF0);
+            }
+            set
+            {
+                Gta.WriteFloat(VehicleHandlingAddy + 0xF0, value);
+            }
+        }
+        public float WeaponDamage
+        {
+            get
+            {
+                return Gta.ReadFloat(VehicleHandlingAddy + 0xF4);
+            }
+            set
+            {
+                Gta.WriteFloat(VehicleHandlingAddy + 0xF4, value);
+            }
+        }
+        public float DeformationDamage
+        {
+            get
+            {
+                return Gta.ReadFloat(VehicleHandlingAddy + 0xF8);
+            }
+            set
+            {
+                Gta.WriteFloat(VehicleHandlingAddy + 0xF8, value);
             }
         }
     }

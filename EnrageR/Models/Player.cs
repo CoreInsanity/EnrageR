@@ -36,6 +36,10 @@ namespace EnrageR.Models
                 Gta.WriteFloat(radar + 0x50, value.X);
                 Gta.WriteFloat(radar + 0x54, value.Y);
                 Gta.WriteFloat(radar + 0x58, value.Z);
+
+                Gta.WriteFloat(PlayerAddy + 0x90, value.X);
+                Gta.WriteFloat(PlayerAddy + 0x94, value.Y);
+                Gta.WriteFloat(PlayerAddy + 0x98, value.Z);
             }
         }
         public float Health
