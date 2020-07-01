@@ -57,8 +57,9 @@ namespace EnrageR.Models
         {
             get
             {
-                if (Gta.ReadByte(PlayerAddy + 0x146B) == 12) return true;
-                else return false;
+                var read = Gta.ReadByte(PlayerAddy + 0x146B);
+                if (read != 20) return true;
+                return false;
             }
         }
         public string Name

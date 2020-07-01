@@ -45,22 +45,38 @@
             this.AutoHealCheckBox = new System.Windows.Forms.CheckBox();
             this.CloseTimer = new System.Windows.Forms.Timer(this.components);
             this.VehicleGroupBox = new System.Windows.Forms.GroupBox();
+            this.SpaceButton = new System.Windows.Forms.Button();
+            this.IncreaseGravityCheckbox = new System.Windows.Forms.CheckBox();
+            this.VehicleGravityTrackbar = new System.Windows.Forms.TrackBar();
+            this.VehicleAccelerationTrackbar = new System.Windows.Forms.TrackBar();
+            this.WeaponDamageCheckbox = new System.Windows.Forms.CheckBox();
+            this.CollisionDamageCheckbox = new System.Windows.Forms.CheckBox();
             this.DestroyLastUsedButton = new System.Windows.Forms.Button();
             this.VehicleHealthTrackbar = new System.Windows.Forms.TrackBar();
             this.EngineDamageCheckbox = new System.Windows.Forms.CheckBox();
-            this.CollisionDamageCheckbox = new System.Windows.Forms.CheckBox();
-            this.WeaponDamageCheckbox = new System.Windows.Forms.CheckBox();
-            this.VehicleAccelerationTrackbar = new System.Windows.Forms.TrackBar();
-            this.VehicleGravityTrackbar = new System.Windows.Forms.TrackBar();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).BeginInit();
             this.VehicleGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VehicleAccelerationTrackbar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleGravityTrackbar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleAccelerationTrackbar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // ExitImage
@@ -104,7 +120,7 @@
             // 
             this.MarqueeLabel.AutoSize = true;
             this.MarqueeLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MarqueeLabel.Location = new System.Drawing.Point(213, 494);
+            this.MarqueeLabel.Location = new System.Drawing.Point(213, 672);
             this.MarqueeLabel.Name = "MarqueeLabel";
             this.MarqueeLabel.Size = new System.Drawing.Size(211, 13);
             this.MarqueeLabel.TabIndex = 3;
@@ -122,7 +138,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 75);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(336, 81);
+            this.groupBox1.Size = new System.Drawing.Size(336, 67);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Teleport";
@@ -132,7 +148,7 @@
             // 
             this.TeleportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.TeleportButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TeleportButton.Location = new System.Drawing.Point(167, 29);
+            this.TeleportButton.Location = new System.Drawing.Point(167, 26);
             this.TeleportButton.Name = "TeleportButton";
             this.TeleportButton.Size = new System.Drawing.Size(69, 23);
             this.TeleportButton.TabIndex = 1;
@@ -147,7 +163,7 @@
             this.TeleportBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.TeleportBox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TeleportBox.FormattingEnabled = true;
-            this.TeleportBox.Location = new System.Drawing.Point(23, 30);
+            this.TeleportBox.Location = new System.Drawing.Point(23, 27);
             this.TeleportBox.Name = "TeleportBox";
             this.TeleportBox.Size = new System.Drawing.Size(121, 21);
             this.TeleportBox.TabIndex = 0;
@@ -160,7 +176,7 @@
             this.groupBox2.Controls.Add(this.ExtremeGodmodeCheckbox);
             this.groupBox2.Controls.Add(this.AutoHealCheckBox);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(12, 162);
+            this.groupBox2.Location = new System.Drawing.Point(12, 148);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(336, 118);
             this.groupBox2.TabIndex = 5;
@@ -219,26 +235,95 @@
             // 
             // VehicleGroupBox
             // 
-            this.VehicleGroupBox.Controls.Add(this.VehicleGravityTrackbar);
-            this.VehicleGroupBox.Controls.Add(this.VehicleAccelerationTrackbar);
-            this.VehicleGroupBox.Controls.Add(this.WeaponDamageCheckbox);
-            this.VehicleGroupBox.Controls.Add(this.CollisionDamageCheckbox);
+            this.VehicleGroupBox.Controls.Add(this.groupBox6);
+            this.VehicleGroupBox.Controls.Add(this.groupBox5);
+            this.VehicleGroupBox.Controls.Add(this.groupBox4);
+            this.VehicleGroupBox.Controls.Add(this.groupBox3);
+            this.VehicleGroupBox.Controls.Add(this.SpaceButton);
             this.VehicleGroupBox.Controls.Add(this.DestroyLastUsedButton);
-            this.VehicleGroupBox.Controls.Add(this.VehicleHealthTrackbar);
-            this.VehicleGroupBox.Controls.Add(this.EngineDamageCheckbox);
             this.VehicleGroupBox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VehicleGroupBox.Location = new System.Drawing.Point(12, 286);
+            this.VehicleGroupBox.Location = new System.Drawing.Point(12, 272);
             this.VehicleGroupBox.Name = "VehicleGroupBox";
-            this.VehicleGroupBox.Size = new System.Drawing.Size(336, 204);
+            this.VehicleGroupBox.Size = new System.Drawing.Size(336, 395);
             this.VehicleGroupBox.TabIndex = 6;
             this.VehicleGroupBox.TabStop = false;
             this.VehicleGroupBox.Text = "Vehicle";
             this.VehicleGroupBox.MouseHover += new System.EventHandler(this.OnHover);
             // 
+            // SpaceButton
+            // 
+            this.SpaceButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SpaceButton.Location = new System.Drawing.Point(219, 280);
+            this.SpaceButton.Name = "SpaceButton";
+            this.SpaceButton.Size = new System.Drawing.Size(75, 23);
+            this.SpaceButton.TabIndex = 14;
+            this.SpaceButton.Text = "Space";
+            this.SpaceButton.UseVisualStyleBackColor = true;
+            this.SpaceButton.Click += new System.EventHandler(this.SpaceButton_Click);
+            this.SpaceButton.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // IncreaseGravityCheckbox
+            // 
+            this.IncreaseGravityCheckbox.AutoSize = true;
+            this.IncreaseGravityCheckbox.Location = new System.Drawing.Point(12, 20);
+            this.IncreaseGravityCheckbox.Name = "IncreaseGravityCheckbox";
+            this.IncreaseGravityCheckbox.Size = new System.Drawing.Size(105, 17);
+            this.IncreaseGravityCheckbox.TabIndex = 13;
+            this.IncreaseGravityCheckbox.Text = "Increase gravity";
+            this.IncreaseGravityCheckbox.UseVisualStyleBackColor = true;
+            this.IncreaseGravityCheckbox.CheckedChanged += new System.EventHandler(this.IncreaseGravityCheckbox_CheckedChanged);
+            this.IncreaseGravityCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // VehicleGravityTrackbar
+            // 
+            this.VehicleGravityTrackbar.LargeChange = 1;
+            this.VehicleGravityTrackbar.Location = new System.Drawing.Point(6, 20);
+            this.VehicleGravityTrackbar.Name = "VehicleGravityTrackbar";
+            this.VehicleGravityTrackbar.Size = new System.Drawing.Size(281, 45);
+            this.VehicleGravityTrackbar.TabIndex = 12;
+            this.VehicleGravityTrackbar.Scroll += new System.EventHandler(this.VehicleGravityTrackbar_Scroll);
+            this.VehicleGravityTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // VehicleAccelerationTrackbar
+            // 
+            this.VehicleAccelerationTrackbar.LargeChange = 1;
+            this.VehicleAccelerationTrackbar.Location = new System.Drawing.Point(6, 20);
+            this.VehicleAccelerationTrackbar.Minimum = 1;
+            this.VehicleAccelerationTrackbar.Name = "VehicleAccelerationTrackbar";
+            this.VehicleAccelerationTrackbar.Size = new System.Drawing.Size(281, 45);
+            this.VehicleAccelerationTrackbar.TabIndex = 11;
+            this.VehicleAccelerationTrackbar.Value = 1;
+            this.VehicleAccelerationTrackbar.Scroll += new System.EventHandler(this.VehicleAccelerationTrackbar_Scroll);
+            this.VehicleAccelerationTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // WeaponDamageCheckbox
+            // 
+            this.WeaponDamageCheckbox.AutoSize = true;
+            this.WeaponDamageCheckbox.Location = new System.Drawing.Point(12, 84);
+            this.WeaponDamageCheckbox.Name = "WeaponDamageCheckbox";
+            this.WeaponDamageCheckbox.Size = new System.Drawing.Size(130, 17);
+            this.WeaponDamageCheckbox.TabIndex = 10;
+            this.WeaponDamageCheckbox.Text = "No weapon damage";
+            this.WeaponDamageCheckbox.UseVisualStyleBackColor = true;
+            this.WeaponDamageCheckbox.CheckedChanged += new System.EventHandler(this.WeaponDamageCheckbox_CheckedChanged);
+            this.WeaponDamageCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // CollisionDamageCheckbox
+            // 
+            this.CollisionDamageCheckbox.AutoSize = true;
+            this.CollisionDamageCheckbox.Location = new System.Drawing.Point(12, 63);
+            this.CollisionDamageCheckbox.Name = "CollisionDamageCheckbox";
+            this.CollisionDamageCheckbox.Size = new System.Drawing.Size(131, 17);
+            this.CollisionDamageCheckbox.TabIndex = 9;
+            this.CollisionDamageCheckbox.Text = "No collision damage";
+            this.CollisionDamageCheckbox.UseVisualStyleBackColor = true;
+            this.CollisionDamageCheckbox.CheckedChanged += new System.EventHandler(this.CollisionDamageCheckbox_CheckedChanged);
+            this.CollisionDamageCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
             // DestroyLastUsedButton
             // 
             this.DestroyLastUsedButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DestroyLastUsedButton.Location = new System.Drawing.Point(235, 168);
+            this.DestroyLastUsedButton.Location = new System.Drawing.Point(219, 342);
             this.DestroyLastUsedButton.Name = "DestroyLastUsedButton";
             this.DestroyLastUsedButton.Size = new System.Drawing.Size(75, 23);
             this.DestroyLastUsedButton.TabIndex = 8;
@@ -249,9 +334,10 @@
             // 
             // VehicleHealthTrackbar
             // 
-            this.VehicleHealthTrackbar.Location = new System.Drawing.Point(23, 21);
+            this.VehicleHealthTrackbar.LargeChange = 1;
+            this.VehicleHealthTrackbar.Location = new System.Drawing.Point(6, 20);
             this.VehicleHealthTrackbar.Name = "VehicleHealthTrackbar";
-            this.VehicleHealthTrackbar.Size = new System.Drawing.Size(287, 45);
+            this.VehicleHealthTrackbar.Size = new System.Drawing.Size(281, 45);
             this.VehicleHealthTrackbar.TabIndex = 7;
             this.VehicleHealthTrackbar.Scroll += new System.EventHandler(this.VehicleHealthTrackbar_Scroll);
             this.VehicleHealthTrackbar.MouseHover += new System.EventHandler(this.OnHover);
@@ -259,7 +345,7 @@
             // EngineDamageCheckbox
             // 
             this.EngineDamageCheckbox.AutoSize = true;
-            this.EngineDamageCheckbox.Location = new System.Drawing.Point(23, 134);
+            this.EngineDamageCheckbox.Location = new System.Drawing.Point(12, 42);
             this.EngineDamageCheckbox.Name = "EngineDamageCheckbox";
             this.EngineDamageCheckbox.Size = new System.Drawing.Size(124, 17);
             this.EngineDamageCheckbox.TabIndex = 0;
@@ -268,56 +354,120 @@
             this.EngineDamageCheckbox.CheckedChanged += new System.EventHandler(this.EngineDamageCheckbox_CheckedChanged);
             this.EngineDamageCheckbox.MouseHover += new System.EventHandler(this.OnHover);
             // 
-            // CollisionDamageCheckbox
+            // groupBox3
             // 
-            this.CollisionDamageCheckbox.AutoSize = true;
-            this.CollisionDamageCheckbox.Location = new System.Drawing.Point(23, 155);
-            this.CollisionDamageCheckbox.Name = "CollisionDamageCheckbox";
-            this.CollisionDamageCheckbox.Size = new System.Drawing.Size(131, 17);
-            this.CollisionDamageCheckbox.TabIndex = 9;
-            this.CollisionDamageCheckbox.Text = "No collision damage";
-            this.CollisionDamageCheckbox.UseVisualStyleBackColor = true;
-            this.CollisionDamageCheckbox.CheckedChanged += new System.EventHandler(this.CollisionDamageCheckbox_CheckedChanged);
-            this.CollisionDamageCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.VehicleHealthTrackbar);
+            this.groupBox3.Location = new System.Drawing.Point(23, 21);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(293, 69);
+            this.groupBox3.TabIndex = 15;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Engine";
+            this.groupBox3.MouseHover += new System.EventHandler(this.OnHover);
             // 
-            // WeaponDamageCheckbox
+            // groupBox4
             // 
-            this.WeaponDamageCheckbox.AutoSize = true;
-            this.WeaponDamageCheckbox.Location = new System.Drawing.Point(23, 176);
-            this.WeaponDamageCheckbox.Name = "WeaponDamageCheckbox";
-            this.WeaponDamageCheckbox.Size = new System.Drawing.Size(130, 17);
-            this.WeaponDamageCheckbox.TabIndex = 10;
-            this.WeaponDamageCheckbox.Text = "No weapon damage";
-            this.WeaponDamageCheckbox.UseVisualStyleBackColor = true;
-            this.WeaponDamageCheckbox.CheckedChanged += new System.EventHandler(this.WeaponDamageCheckbox_CheckedChanged);
-            this.WeaponDamageCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.VehicleAccelerationTrackbar);
+            this.groupBox4.Location = new System.Drawing.Point(23, 96);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(293, 69);
+            this.groupBox4.TabIndex = 16;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Acceleration";
+            this.groupBox4.MouseHover += new System.EventHandler(this.OnHover);
             // 
-            // VehicleAccelerationTrackbar
+            // groupBox5
             // 
-            this.VehicleAccelerationTrackbar.Location = new System.Drawing.Point(23, 52);
-            this.VehicleAccelerationTrackbar.Minimum = 1;
-            this.VehicleAccelerationTrackbar.Name = "VehicleAccelerationTrackbar";
-            this.VehicleAccelerationTrackbar.Size = new System.Drawing.Size(287, 45);
-            this.VehicleAccelerationTrackbar.TabIndex = 11;
-            this.VehicleAccelerationTrackbar.Value = 1;
-            this.VehicleAccelerationTrackbar.Scroll += new System.EventHandler(this.VehicleAccelerationTrackbar_Scroll);
-            this.VehicleAccelerationTrackbar.MouseHover += new System.EventHandler(this.OnHover);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Controls.Add(this.VehicleGravityTrackbar);
+            this.groupBox5.Location = new System.Drawing.Point(23, 171);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(293, 69);
+            this.groupBox5.TabIndex = 17;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Gravity";
+            this.groupBox5.MouseHover += new System.EventHandler(this.OnHover);
             // 
-            // VehicleGravityTrackbar
+            // groupBox6
             // 
-            this.VehicleGravityTrackbar.Location = new System.Drawing.Point(23, 84);
-            this.VehicleGravityTrackbar.Name = "VehicleGravityTrackbar";
-            this.VehicleGravityTrackbar.Size = new System.Drawing.Size(287, 45);
-            this.VehicleGravityTrackbar.TabIndex = 12;
-            this.VehicleGravityTrackbar.Scroll += new System.EventHandler(this.VehicleGravityTrackbar_Scroll);
+            this.groupBox6.Controls.Add(this.EngineDamageCheckbox);
+            this.groupBox6.Controls.Add(this.CollisionDamageCheckbox);
+            this.groupBox6.Controls.Add(this.WeaponDamageCheckbox);
+            this.groupBox6.Controls.Add(this.IncreaseGravityCheckbox);
+            this.groupBox6.Location = new System.Drawing.Point(23, 265);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(155, 107);
+            this.groupBox6.TabIndex = 18;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Toggles";
+            this.groupBox6.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(263, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(22, 13);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "9.8";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 49);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "1";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(264, 49);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(19, 13);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "10";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(13, 13);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(258, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "1000";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(360, 513);
+            this.BackColor = System.Drawing.Color.Gray;
+            this.ClientSize = new System.Drawing.Size(360, 692);
             this.Controls.Add(this.VehicleGroupBox);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -342,10 +492,17 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HealthTrackbar)).EndInit();
             this.VehicleGroupBox.ResumeLayout(false);
-            this.VehicleGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VehicleAccelerationTrackbar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleGravityTrackbar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleAccelerationTrackbar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -375,6 +532,18 @@
         private System.Windows.Forms.CheckBox CollisionDamageCheckbox;
         private System.Windows.Forms.TrackBar VehicleAccelerationTrackbar;
         private System.Windows.Forms.TrackBar VehicleGravityTrackbar;
+        private System.Windows.Forms.CheckBox IncreaseGravityCheckbox;
+        private System.Windows.Forms.Button SpaceButton;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
 

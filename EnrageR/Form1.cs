@@ -18,7 +18,6 @@ namespace EnrageR
     public partial class Form1 : Form
     {
         private Player Player;
-        private Vehicle Vehicle;
         private Hook KeyboardHook;
         private GTA Gta;
         private Thread UIUpdaterThread;
@@ -30,6 +29,9 @@ namespace EnrageR
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            var login = new Login();
+            login.ShowDialog();
+
             Gta = new GTA();
             Player = new Player(Gta);
             UIUpdaterThread = new Thread(new ThreadStart(UpdateUIElements));
@@ -53,14 +55,19 @@ namespace EnrageR
             new ToolTip().SetToolTip(VehicleHealthTrackbar, "Vehicle engine health");
             new ToolTip().SetToolTip(VehicleAccelerationTrackbar, "Vehicle acceleration");
             new ToolTip().SetToolTip(DestroyLastUsedButton, "Destroy current/last used vehicle");
+            new ToolTip().SetToolTip(SpaceButton, "Transform current/last used vehicle into a falcon heavy");
             new ToolTip().SetToolTip(VehicleGravityTrackbar, "Set gravity of vehicle");
+            new ToolTip().SetToolTip(IncreaseGravityCheckbox, "Increase gravity for easier driving");
+            new ToolTip().SetToolTip(EngineDamageCheckbox, "Toggle engine damage on this vehicle");
+            new ToolTip().SetToolTip(CollisionDamageCheckbox, "Toggle collision damage on this vehicle");
+            new ToolTip().SetToolTip(WeaponDamageCheckbox, "Toggle weapon damage on this vehicle");
+
         }
         #region events
         private void KeyPress(KeyboardHookEventArgs e)
         {
             if (e.isAltPressed)
             {
-                Trace.WriteLine("Healing...");
                 Player.Health = 200;
                 return;
             }
@@ -80,6 +87,15 @@ namespace EnrageR
                     this.Activate();
                 }
                 else WindowState = FormWindowState.Minimized;
+            }
+
+            if (e.Key == Keys.NumPad0)
+            {
+                if (!Player.IsInVehicle) return;
+                var gravity = Player.CurrentVehicle.Gravity;
+                if (gravity == 0 && IncreaseGravityCheckbox.Checked) Player.CurrentVehicle.Gravity = 17f;
+                else if (gravity == 0) Player.CurrentVehicle.Gravity = 9.8f;
+                else Player.CurrentVehicle.Gravity = 0f;
             }
         }
 
@@ -166,6 +182,12 @@ namespace EnrageR
             if (CollisionDamageCheckbox.Checked) Player.CurrentVehicle.CollisionDamage = 0;
             else Player.CurrentVehicle.CollisionDamage = 1;
         }
+        private void IncreaseGravityCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Player.IsInVehicle) return;
+            if (IncreaseGravityCheckbox.Checked) Player.CurrentVehicle.Gravity = 17f;
+            else Player.CurrentVehicle.Gravity = 9.8f;
+        }
         private void VehicleHealthTrackbar_Scroll(object sender, EventArgs e)
         {
             if (Player.IsInVehicle) Player.CurrentVehicle.EngineHealth = VehicleHealthTrackbar.Value * 100;
@@ -176,9 +198,9 @@ namespace EnrageR
         }
         private void VehicleGravityTrackbar_Scroll(object sender, EventArgs e)
         {
-            var gravity = Player.CurrentVehicle.Gravity;
+            var gravity = (float)VehicleGravityTrackbar.Value;
             if (gravity == 10) gravity = 9.8f;
-            if (Player.IsInVehicle) Player.CurrentVehicle.Gravity = VehicleGravityTrackbar.Value;
+            if (Player.IsInVehicle) Player.CurrentVehicle.Gravity = gravity;
         }
         private void HealthTrackbar_Scroll(object sender, EventArgs e)
         {
@@ -187,6 +209,11 @@ namespace EnrageR
         private void DestroyLastUsedButton_Click(object sender, EventArgs e)
         {
             Player.LastVehicle.EngineHealth = -1;
+        }
+        private void SpaceButton_Click(object sender, EventArgs e)
+        {
+            if (Player.LastVehicle == null) return;
+            Player.LastVehicle.Gravity = -9.8f;
         }
 
         /// <summary>
@@ -208,6 +235,7 @@ namespace EnrageR
         }
         #endregion
         #region threads
+        private long LastClearedAddy;
         private void UpdateUIElements()
         {
             while (true)
@@ -228,19 +256,22 @@ namespace EnrageR
                 if (Player.IsInVehicle)
                 {
                     var vehicle = Player.CurrentVehicle;
-                    if (vehicle == null) return; //Workaround for a weird bug that I'm too tired to care about
+                    if (vehicle == null) continue;
                     var vehHealth = vehicle.EngineHealth;
                     if (vehHealth < 1) vehHealth = 0;
 
                     VehicleGroupBox.Invoke(new Action(() =>
                     {
+                        LastClearedAddy = 0;
                         VehicleHealthTrackbar.Enabled = true;
                         VehicleAccelerationTrackbar.Enabled = true;
-                        VehicleGravityTrackbar.Enabled = true;
+                        if (!IncreaseGravityCheckbox.Checked) VehicleGravityTrackbar.Enabled = true;
+                        else VehicleGravityTrackbar.Enabled = false;
 
                         CollisionDamageCheckbox.Enabled = true;
                         EngineDamageCheckbox.Enabled = true;
                         WeaponDamageCheckbox.Enabled = true;
+                        IncreaseGravityCheckbox.Enabled = true;
 
                         try
                         {
@@ -265,12 +296,18 @@ namespace EnrageR
                         CollisionDamageCheckbox.Checked = false;
                         EngineDamageCheckbox.Checked = false;
                         WeaponDamageCheckbox.Checked = false;
+                        IncreaseGravityCheckbox.Checked = false;
 
                         CollisionDamageCheckbox.Enabled = false;
                         EngineDamageCheckbox.Enabled = false;
                         WeaponDamageCheckbox.Enabled = false;
+                        IncreaseGravityCheckbox.Enabled = false;
                     }));
-                    if (Player.LastVehicle != null) Player.LastVehicle.Reset();
+                    if (Player.LastVehicle != null && Player.LastVehicle.VehicleAddy != LastClearedAddy)
+                    {
+                        Player.LastVehicle.Reset();
+                        LastClearedAddy = Player.LastVehicle.VehicleAddy; //Ensure we only clear this once
+                    }
                 }
             }
         }

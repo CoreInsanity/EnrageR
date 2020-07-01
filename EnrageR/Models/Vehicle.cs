@@ -10,7 +10,7 @@ namespace EnrageR.Models
 {
     class Vehicle
     {
-        private long VehicleAddy;
+        public long VehicleAddy;
         private long VehicleHandlingAddy;
         private GTA Gta;
 

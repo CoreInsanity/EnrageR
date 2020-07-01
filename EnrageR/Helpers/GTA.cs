@@ -41,7 +41,7 @@ namespace EnrageR.Helpers
         }
         private void GetWorldAddy()
         {
-            var fact = new CPedFactory(this);
+            var fact = new CPedFactory(this, GtaType.ROCKSTAR);
             CPedFactory = ReadInt64((long)fact.Addy);
         }
 
