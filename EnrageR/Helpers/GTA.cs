@@ -126,7 +126,6 @@ namespace EnrageR.Helpers
             return WriteMemory(addr, Buffer);
         }
         #endregion
-
         #region threads
         private void CheckProcessAlive()
         {

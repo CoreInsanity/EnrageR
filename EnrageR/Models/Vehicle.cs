@@ -109,4 +109,10 @@ namespace EnrageR.Models
             }
         }
     }
+    public enum VehicleStatus
+    {
+        IN,
+        TRANS,
+        OUT
+    }
 }

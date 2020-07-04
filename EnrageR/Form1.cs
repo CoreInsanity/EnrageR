@@ -91,11 +91,13 @@ namespace EnrageR
 
             if (e.Key == Keys.NumPad0)
             {
-                if (!Player.IsInVehicle) return;
-                var gravity = Player.CurrentVehicle.Gravity;
-                if (gravity == 0 && IncreaseGravityCheckbox.Checked) Player.CurrentVehicle.Gravity = 17f;
-                else if (gravity == 0) Player.CurrentVehicle.Gravity = 9.8f;
-                else Player.CurrentVehicle.Gravity = 0f;
+                if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS)
+                {
+                    var gravity = Player.CurrentVehicle.Gravity;
+                    if (gravity == 0 && IncreaseGravityCheckbox.Checked) Player.CurrentVehicle.Gravity = 17f;
+                    else if (gravity == 0) Player.CurrentVehicle.Gravity = 9.8f;
+                    else Player.CurrentVehicle.Gravity = 0f;
+                }
             }
         }
 
@@ -166,41 +168,49 @@ namespace EnrageR
 
         private void EngineDamageCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Player.IsInVehicle) return;
-            if (EngineDamageCheckbox.Checked) Player.CurrentVehicle.EngineDamage = 0;
-            else Player.CurrentVehicle.EngineDamage = 1;
+            if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS)
+            {
+                if (EngineDamageCheckbox.Checked) Player.CurrentVehicle.EngineDamage = 0;
+                else Player.CurrentVehicle.EngineDamage = 1;
+            }
         }
         private void WeaponDamageCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Player.IsInVehicle) return;
-            if (WeaponDamageCheckbox.Checked) Player.CurrentVehicle.WeaponDamage = 0;
-            else Player.CurrentVehicle.WeaponDamage = 1;
+            if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS)
+            {
+                if (WeaponDamageCheckbox.Checked) Player.CurrentVehicle.WeaponDamage = 0;
+                else Player.CurrentVehicle.WeaponDamage = 1;
+            }
         }
         private void CollisionDamageCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Player.IsInVehicle) return;
-            if (CollisionDamageCheckbox.Checked) Player.CurrentVehicle.CollisionDamage = 0;
-            else Player.CurrentVehicle.CollisionDamage = 1;
+            if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS)
+            {
+                if (CollisionDamageCheckbox.Checked) Player.CurrentVehicle.CollisionDamage = 0;
+                else Player.CurrentVehicle.CollisionDamage = 1;
+            }
         }
         private void IncreaseGravityCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Player.IsInVehicle) return;
-            if (IncreaseGravityCheckbox.Checked) Player.CurrentVehicle.Gravity = 17f;
-            else Player.CurrentVehicle.Gravity = 9.8f;
+            if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS)
+            {
+                if (IncreaseGravityCheckbox.Checked) Player.CurrentVehicle.Gravity = 17f;
+                else Player.CurrentVehicle.Gravity = 9.8f;
+            }
         }
         private void VehicleHealthTrackbar_Scroll(object sender, EventArgs e)
         {
-            if (Player.IsInVehicle) Player.CurrentVehicle.EngineHealth = VehicleHealthTrackbar.Value * 100;
+            if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS) Player.CurrentVehicle.EngineHealth = VehicleHealthTrackbar.Value * 100;
         }
         private void VehicleAccelerationTrackbar_Scroll(object sender, EventArgs e)
         {
-            if (Player.IsInVehicle) Player.CurrentVehicle.Acceleration = VehicleAccelerationTrackbar.Value;
+            if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS) Player.CurrentVehicle.Acceleration = VehicleAccelerationTrackbar.Value;
         }
         private void VehicleGravityTrackbar_Scroll(object sender, EventArgs e)
         {
             var gravity = (float)VehicleGravityTrackbar.Value;
             if (gravity == 10) gravity = 9.8f;
-            if (Player.IsInVehicle) Player.CurrentVehicle.Gravity = gravity;
+            if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS) Player.CurrentVehicle.Gravity = gravity;
         }
         private void HealthTrackbar_Scroll(object sender, EventArgs e)
         {
@@ -252,8 +262,8 @@ namespace EnrageR
                         HealthTrackbar.Value = (int)Math.Floor((Player.Health - 100.0) / 10.0);
                     }));
 
-                //Update Vehicle Health
-                if (Player.IsInVehicle)
+                //Update Vehicle
+                if (Player.VehicleStatus == VehicleStatus.IN)
                 {
                     var vehicle = Player.CurrentVehicle;
                     if (vehicle == null) continue;
@@ -285,7 +295,7 @@ namespace EnrageR
                         }
                     }));
                 }
-                else
+                else if (Player.VehicleStatus == VehicleStatus.OUT)
                 {
                     VehicleGroupBox.Invoke(new Action(() =>
                     {

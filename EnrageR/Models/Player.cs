@@ -26,7 +26,7 @@ namespace EnrageR.Models
         }
         public Location Location
         {
-            get 
+            get
             {
                 return new Location(Gta.ReadFloat(PlayerAddy + 0x90), Gta.ReadFloat(PlayerAddy + 0x94), Gta.ReadFloat(PlayerAddy + 0x98), Locations.LSAirport);
             }
@@ -53,13 +53,21 @@ namespace EnrageR.Models
                 if (value > 0) Gta.WriteFloat(PlayerAddy + 0x280, value);
             }
         }
-        public bool IsInVehicle
+        public VehicleStatus VehicleStatus
         {
             get
             {
-                var read = Gta.ReadByte(PlayerAddy + 0x146B);
-                if (read != 20) return true;
-                return false;
+                switch (Gta.ReadByte(PlayerAddy + 0x146B))
+                {
+                    case 20:
+                        return VehicleStatus.OUT;
+                    case 4:
+                        return VehicleStatus.TRANS;
+                    case 12:
+                        return VehicleStatus.IN;
+                    default:
+                        return VehicleStatus.TRANS;
+                }
             }
         }
         public string Name
@@ -95,9 +103,12 @@ namespace EnrageR.Models
         {
             get
             {
-                if (!IsInVehicle) return null;
-                LastVehicle = new Vehicle(Gta, Gta.ReadInt64(PlayerAddy + 0xD28));
-                return LastVehicle;
+                if (VehicleStatus == VehicleStatus.IN || VehicleStatus == VehicleStatus.TRANS)
+                {
+                    LastVehicle = new Vehicle(Gta, Gta.ReadInt64(PlayerAddy + 0xD28));
+                    return LastVehicle;
+                }
+                else return null;
             }
         }
 
@@ -118,7 +129,7 @@ namespace EnrageR.Models
             var parmsCast = (HealingParms)parms;
             while (true)
             {
-                
+
                 if (Health < parmsCast.Health) Health = parmsCast.Health;
                 Thread.Sleep(parmsCast.Delay);
             }
