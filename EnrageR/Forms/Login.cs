@@ -39,11 +39,6 @@ namespace EnrageR
         {
             if (ComputeHash(textBox2.Text).ToLower() == textBox1.Text.ToLower())
             {
-                if (DateTime.Now >= DateTime.Parse("04/07/2020"))
-                {
-                    MessageBox.Show("Outdated client, please update");
-                    Environment.Exit(0);
-                }
                 try
                 {
                     var regKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\EnrageR");
@@ -82,6 +77,15 @@ namespace EnrageR
             {
                 MessageBox.Show("Something went wrong while fetching your key\n\n" + ex.Message);
             }
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "KEY") textBox1.Text = "";
+        }
+        private void textBox2_Enter(object sender, EventArgs e)
+        {
+            if (textBox2.Text == "EMAIL") textBox2.Text = "";
         }
     }
 }

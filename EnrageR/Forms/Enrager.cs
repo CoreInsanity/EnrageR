@@ -15,14 +15,14 @@ using FMUtils.KeyboardHook;
 
 namespace EnrageR
 {
-    public partial class Form1 : Form
+    public partial class Enrager : Form
     {
         private Player Player;
         private Hook KeyboardHook;
         private GTA Gta;
         private Thread UIUpdaterThread;
 
-        public Form1()
+        public Enrager()
         {
             InitializeComponent();
         }
@@ -62,36 +62,45 @@ namespace EnrageR
             new ToolTip().SetToolTip(EngineDamageCheckbox, "Toggle engine damage on this vehicle");
             new ToolTip().SetToolTip(CollisionDamageCheckbox, "Toggle collision damage on this vehicle");
             new ToolTip().SetToolTip(WeaponDamageCheckbox, "Toggle weapon damage on this vehicle");
-
+            new ToolTip().SetToolTip(ExitImage, "Close the cheat");
         }
+
         #region events
+        #region UI
+        /// <summary>
+        /// Mouse drag moves form
+        /// </summary>
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
         private void KeyPress(KeyboardHookEventArgs e)
         {
-            if (e.isAltPressed)
-            {
-                Player.Health = 200;
-                return;
-            }
+            if (e.isAltPressed) Player.Health = 200;
 
-            if (e.isRCtrlPressed)
-            {
-                TeleportButton_Click(new object(), new EventArgs());
-                //var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
-                //if (loc == null) return;
-                //Player.Location = loc;
-            }
+            else if (e.isRCtrlPressed) TeleportButton_Click(new object(), new EventArgs());
 
-            if (e.Key == Keys.F10)
+            else if (e.Key == Keys.F10)
             {
                 if (WindowState == FormWindowState.Minimized)
                 {
                     WindowState = FormWindowState.Normal;
                     this.Activate();
+                    this.Opacity = 1;
                 }
                 else WindowState = FormWindowState.Minimized;
             }
-
-            if (e.Key == Keys.NumPad0)
+            else if (e.Key == Keys.NumPad0)
             {
                 if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS)
                 {
@@ -124,17 +133,6 @@ namespace EnrageR
                 Environment.Exit(0);
             }
         }
-
-        private void TeleportButton_Click(object sender, EventArgs e)
-        {
-            if (TeleportBox.Text == "Waypoint") Player.Location = Player.Waypoint;
-            else
-            {
-                var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
-                if (loc != null) Player.Location = loc;
-            }
-            WindowState = FormWindowState.Minimized;
-        }
         private void OnHover(object sender, EventArgs e)
         {
             if (!CloseTimer.Enabled) CloseTimer.Start();
@@ -145,7 +143,7 @@ namespace EnrageR
         private void OnLeave()
         {
             sec = 0;
-            Opacity = 1;
+            Opacity = 0.8;
             //for (double i = Opacity * 100; i >= 80; i--)
             //{
             //    Opacity = i / 100.0;
@@ -158,17 +156,44 @@ namespace EnrageR
             sec++;
             if (sec >= 10) OnLeave();
         }
+        #endregion
+        #region Teleport
+        private void TeleportButton_Click(object sender, EventArgs e)
+        {
+            if (TeleportBox.Text == "Waypoint") Player.Location = Player.Waypoint;
+            else
+            {
+                var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
+                if (loc != null) Player.Location = loc;
+            }
+            WindowState = FormWindowState.Minimized;
+        }
+        #endregion
+        #region Health
+        private void HealthTrackbar_Scroll(object sender, EventArgs e)
+        {
+            Player.Health = HealthTrackbar.Value * 10 + 100;
+        }
         private void ExtremeGodmode_CheckedChanged(object sender, EventArgs e)
         {
-            if (ExtremeGodmodeCheckbox.Checked) Player.EnableAutoHeal(100, 10000);
-            else Player.DisableAutoHeal();
+            //if (ExtremeGodmodeCheckbox.Checked) Player.EnableAutoHeal(100, 10000);
+            //else Player.DisableAutoHeal();
         }
         private void AutoHeal_CheckedChanged(object sender, EventArgs e)
         {
-            if (AutoHealCheckBox.Checked) Player.EnableAutoHeal(Convert.ToInt32(AutoHealTextbox.Text), 200);
-            else Player.DisableAutoHeal();
+            if (AutoHealCheckBox.Checked)
+            {
+                Player.EnableAutoHeal(Convert.ToInt32(AutoHealTextbox.Text));
+                HealthTrackbar.Enabled = false;
+            }
+            else
+            {
+                Player.DisableAutoHeal();
+                HealthTrackbar.Enabled = true;
+            }
         }
-
+        #endregion
+        #region Vehicle
         private void EngineDamageCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS)
@@ -215,10 +240,6 @@ namespace EnrageR
             if (gravity == 10) gravity = 9.8f;
             if (Player.VehicleStatus == VehicleStatus.IN || Player.VehicleStatus == VehicleStatus.TRANS) Player.CurrentVehicle.Gravity = gravity;
         }
-        private void HealthTrackbar_Scroll(object sender, EventArgs e)
-        {
-            Player.Health = HealthTrackbar.Value * 10 + 100;
-        }
         private void DestroyLastUsedButton_Click(object sender, EventArgs e)
         {
             Player.LastVehicle.EngineHealth = -1;
@@ -228,25 +249,26 @@ namespace EnrageR
             if (Player.LastVehicle == null) return;
             Player.LastVehicle.Gravity = -9.8f;
         }
-
-        /// <summary>
-        /// Mouse drag moves form
-        /// </summary>
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        #endregion
+        #region Weapon
+        private void NoRecoilCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
+            if (NoRecoilCheckbox.Checked) Player.Weapon.Recoil = 0;
+            else Player.Weapon.Recoil = Player.Weapon.Backup.Recoil;
+        }
+        private void NoSpreadCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (NoSpreadCheckbox.Checked) Player.Weapon.Spread = 0;
+            else Player.Weapon.Spread = Player.Weapon.Backup.Spread;
+        }
+        private void FastReloadCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (FastReloadCheckbox.Checked) Player.Weapon.ReloadMultiplier = 20;
+            else Player.Weapon.ReloadMultiplier = Player.Weapon.Backup.ReloadMultiplier;
         }
         #endregion
+        #endregion
+
         #region threads
         private long LastClearedAddy;
         private void UpdateUIElements()
@@ -261,7 +283,7 @@ namespace EnrageR
                 else
                     HealthTrackbar.Invoke(new Action(() =>
                     {
-                        HealthTrackbar.Enabled = true;
+                        if(!AutoHealCheckBox.Checked) HealthTrackbar.Enabled = true;
                         HealthTrackbar.Value = (int)Math.Floor((Player.Health - 100.0) / 10.0);
                     }));
 
@@ -270,8 +292,18 @@ namespace EnrageR
                 {
                     var vehicle = Player.CurrentVehicle;
                     if (vehicle == null) continue;
+
                     var vehHealth = vehicle.EngineHealth;
-                    if (vehHealth < 1) vehHealth = 0;
+                    if (vehHealth < 0) vehHealth = 0;
+                    if (vehHealth > 1000) vehHealth = 1000;
+
+                    var vehAcceleration = vehicle.Acceleration;
+                    if (vehAcceleration < 1) vehAcceleration = 1;
+                    if (vehAcceleration > 10) vehAcceleration = 10;
+
+                    var vehGravity = vehicle.Gravity;
+                    if (vehGravity < 0) vehGravity = 0;
+                    if (vehGravity > 10) vehGravity = 10;
 
                     VehicleGroupBox.Invoke(new Action(() =>
                     {
@@ -286,16 +318,9 @@ namespace EnrageR
                         WeaponDamageCheckbox.Enabled = true;
                         IncreaseGravityCheckbox.Enabled = true;
 
-                        try
-                        {
-                            VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
-                            VehicleAccelerationTrackbar.Value = (int)Math.Floor(vehicle.Acceleration);
-                            VehicleGravityTrackbar.Value = (int)Math.Ceiling(vehicle.Gravity);
-                        }
-                        catch (Exception ex)
-                        {
-                            Trace.WriteLine(ex.Message);
-                        }
+                        VehicleHealthTrackbar.Value = (int)Math.Floor(vehHealth / 100.0);
+                        VehicleAccelerationTrackbar.Value = (int)Math.Floor(vehAcceleration);
+                        VehicleGravityTrackbar.Value = (int)Math.Ceiling(vehGravity);
                     }));
                 }
                 else if (Player.VehicleStatus == VehicleStatus.OUT)
@@ -321,6 +346,14 @@ namespace EnrageR
                         Player.LastVehicle.Reset();
                         LastClearedAddy = Player.LastVehicle.VehicleAddy; //Ensure we only clear this once
                     }
+                }
+
+                //Update Weapon
+                if (Player.Weapon.Update())
+                {
+                    if (NoRecoilCheckbox.Checked) Player.Weapon.Recoil = 0;
+                    if (NoSpreadCheckbox.Checked) Player.Weapon.Spread = 0;
+                    if (FastReloadCheckbox.Checked) Player.Weapon.ReloadMultiplier = 20;
                 }
             }
         }

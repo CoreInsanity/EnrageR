@@ -16,6 +16,7 @@ namespace EnrageR.Models
         private long PlayerInfoAddy;
         private Thread AutoHealThread;
         public Vehicle LastVehicle;
+        public Weapon Weapon;
 
         public Player(GTA gta)
         {
@@ -23,6 +24,7 @@ namespace EnrageR.Models
             AutoHealThread = new Thread(new ParameterizedThreadStart(AutoHeal));
             PlayerAddy = Gta.ReadInt64(Gta.CPedFactory + 0x8);
             PlayerInfoAddy = Gta.ReadInt64(PlayerAddy + 0x10B8);
+            Weapon = new Weapon(Gta, PlayerAddy);
         }
         public Location Location
         {
@@ -47,7 +49,7 @@ namespace EnrageR.Models
             get
             { 
                 var baseAddy = (long)Gta.GtaProc.MainModule.BaseAddress;
-                return new Location(Gta.ReadFloat(baseAddy + 0x1F43408), Gta.ReadFloat(baseAddy + 0x1F4340C), 20, Locations.Waypoint);
+                return new Location(Gta.ReadFloat(baseAddy + 0x1F43408), Gta.ReadFloat(baseAddy + 0x1F4340C), 15, Locations.Waypoint);
             }
         }
         public float Health
@@ -120,32 +122,26 @@ namespace EnrageR.Models
             }
         }
 
-        public void EnableAutoHeal(int delay, float health)
+        public void EnableAutoHeal(int delay)
         {
             AutoHealThread = new Thread(new ParameterizedThreadStart(AutoHeal));
-            AutoHealThread.Start(new HealingParms() { Health = health, Delay = delay });
+            AutoHealThread.Start(delay);
         }
         public void DisableAutoHeal()
         {
             AutoHealThread.Abort();
-            Health = 200;
         }
 
 
         private void AutoHeal(object parms)
         {
-            var parmsCast = (HealingParms)parms;
+            var delay = (int)parms;
+            var health = Health;
             while (true)
             {
-
-                if (Health < parmsCast.Health) Health = parmsCast.Health;
-                Thread.Sleep(parmsCast.Delay);
+                if (Health != health) Health = health;
+                Thread.Sleep(delay);
             }
         }
-    }
-    class HealingParms
-    {
-        public int Delay { get; set; }
-        public float Health { get; set; }
     }
 }

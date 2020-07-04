@@ -27,6 +27,12 @@ namespace EnrageR.Helpers
         {
             GtaProc = GetProcess("GTA5");
 
+            if (GtaProc == null)
+            {
+                MessageBox.Show("Process could not be found, exiting...");
+                Environment.Exit(0);
+            }
+
             new Thread(new ThreadStart(CheckProcessAlive)).Start();
 
             GetWorldAddy();

@@ -1,7 +1,6 @@
 C:\Users\maxim\source\repos\EnrageR\EnrageR\bin\x64\Debug\EnrageR.exe.config
 C:\Users\maxim\source\repos\EnrageR\EnrageR\bin\x64\Debug\EnrageR.exe
 C:\Users\maxim\source\repos\EnrageR\EnrageR\bin\x64\Debug\EnrageR.pdb
-C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.Form1.resources
 C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.Properties.Resources.resources
 C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.csproj.GenerateResource.cache
 C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.exe
@@ -10,3 +9,4 @@ C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.csprojAssembly
 C:\Users\maxim\source\repos\EnrageR\EnrageR\bin\x64\Debug\FMUtils.KeyboardHook.dll
 C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.csproj.CopyComplete
 C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.Login.resources
+C:\Users\maxim\source\repos\EnrageR\EnrageR\obj\x64\Debug\EnrageR.Enrager.resources

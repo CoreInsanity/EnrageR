@@ -43,6 +43,7 @@
             this.textBox1.Size = new System.Drawing.Size(237, 47);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "KEY";
+            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
             // 
             // button1
             // 
@@ -62,6 +63,7 @@
             this.textBox2.Size = new System.Drawing.Size(239, 22);
             this.textBox2.TabIndex = 0;
             this.textBox2.Text = "EMAIL";
+            this.textBox2.Enter += new System.EventHandler(this.textBox2_Enter);
             // 
             // Login
             // 
@@ -78,7 +80,7 @@
             this.MinimizeBox = false;
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login";
+            this.Text = "Verify ownership";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);

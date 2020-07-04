@@ -1,6 +1,6 @@
 ﻿namespace EnrageR
 {
-    partial class Form1
+    partial class Enrager
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.ExitImage = new System.Windows.Forms.PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Enrager));
             this.panel1 = new System.Windows.Forms.Panel();
             this.headerLabel = new System.Windows.Forms.Label();
             this.MarqueeLabel = new System.Windows.Forms.Label();
@@ -64,8 +63,12 @@
             this.VehicleHealthTrackbar = new System.Windows.Forms.TrackBar();
             this.SpaceButton = new System.Windows.Forms.Button();
             this.DestroyLastUsedButton = new System.Windows.Forms.Button();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).BeginInit();
+            this.WeaponGroupBox = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.NoSpreadCheckbox = new System.Windows.Forms.CheckBox();
+            this.FastReloadCheckbox = new System.Windows.Forms.CheckBox();
+            this.NoRecoilCheckbox = new System.Windows.Forms.CheckBox();
+            this.ExitImage = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,27 +81,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.VehicleAccelerationTrackbar)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).BeginInit();
+            this.WeaponGroupBox.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ExitImage
-            // 
-            this.ExitImage.BackColor = System.Drawing.Color.Salmon;
-            this.ExitImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ExitImage.Image = global::EnrageR.Properties.Resources.close;
-            this.ExitImage.Location = new System.Drawing.Point(308, 9);
-            this.ExitImage.Name = "ExitImage";
-            this.ExitImage.Size = new System.Drawing.Size(47, 47);
-            this.ExitImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ExitImage.TabIndex = 0;
-            this.ExitImage.TabStop = false;
-            this.ExitImage.Click += new System.EventHandler(this.ExitImage_Click);
-            this.ExitImage.MouseHover += new System.EventHandler(this.OnHover);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Salmon;
             this.panel1.Controls.Add(this.headerLabel);
-            this.panel1.Controls.Add(this.ExitImage);
             this.panel1.Location = new System.Drawing.Point(-1, -1);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(425, 60);
@@ -110,7 +101,7 @@
             this.headerLabel.AutoSize = true;
             this.headerLabel.Font = new System.Drawing.Font("Copperplate Gothic Light", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.headerLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.headerLabel.Location = new System.Drawing.Point(-4, 4);
+            this.headerLabel.Location = new System.Drawing.Point(4, 4);
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(253, 52);
             this.headerLabel.TabIndex = 3;
@@ -121,7 +112,7 @@
             // 
             this.MarqueeLabel.AutoSize = true;
             this.MarqueeLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MarqueeLabel.Location = new System.Drawing.Point(213, 1049);
+            this.MarqueeLabel.Location = new System.Drawing.Point(213, 810);
             this.MarqueeLabel.Name = "MarqueeLabel";
             this.MarqueeLabel.Size = new System.Drawing.Size(211, 13);
             this.MarqueeLabel.TabIndex = 3;
@@ -197,7 +188,7 @@
             // AutoHealTextbox
             // 
             this.AutoHealTextbox.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AutoHealTextbox.Location = new System.Drawing.Point(128, 64);
+            this.AutoHealTextbox.Location = new System.Drawing.Point(101, 64);
             this.AutoHealTextbox.Name = "AutoHealTextbox";
             this.AutoHealTextbox.Size = new System.Drawing.Size(31, 19);
             this.AutoHealTextbox.TabIndex = 2;
@@ -208,6 +199,7 @@
             // ExtremeGodmodeCheckbox
             // 
             this.ExtremeGodmodeCheckbox.AutoSize = true;
+            this.ExtremeGodmodeCheckbox.Enabled = false;
             this.ExtremeGodmodeCheckbox.Location = new System.Drawing.Point(23, 88);
             this.ExtremeGodmodeCheckbox.Name = "ExtremeGodmodeCheckbox";
             this.ExtremeGodmodeCheckbox.Size = new System.Drawing.Size(155, 17);
@@ -222,9 +214,9 @@
             this.AutoHealCheckBox.AutoSize = true;
             this.AutoHealCheckBox.Location = new System.Drawing.Point(23, 65);
             this.AutoHealCheckBox.Name = "AutoHealCheckBox";
-            this.AutoHealCheckBox.Size = new System.Drawing.Size(165, 17);
+            this.AutoHealCheckBox.Size = new System.Drawing.Size(137, 17);
             this.AutoHealCheckBox.TabIndex = 0;
-            this.AutoHealCheckBox.Text = "Auto-heal every               ms";
+            this.AutoHealCheckBox.Text = "Lock every               ms";
             this.AutoHealCheckBox.UseVisualStyleBackColor = true;
             this.AutoHealCheckBox.CheckedChanged += new System.EventHandler(this.AutoHeal_CheckedChanged);
             this.AutoHealCheckBox.MouseHover += new System.EventHandler(this.OnHover);
@@ -462,23 +454,89 @@
             this.DestroyLastUsedButton.Click += new System.EventHandler(this.DestroyLastUsedButton_Click);
             this.DestroyLastUsedButton.MouseHover += new System.EventHandler(this.OnHover);
             // 
-            // groupBox7
+            // WeaponGroupBox
             // 
-            this.groupBox7.Location = new System.Drawing.Point(12, 673);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(336, 322);
-            this.groupBox7.TabIndex = 7;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "groupBox7";
+            this.WeaponGroupBox.Controls.Add(this.groupBox8);
+            this.WeaponGroupBox.Location = new System.Drawing.Point(12, 673);
+            this.WeaponGroupBox.Name = "WeaponGroupBox";
+            this.WeaponGroupBox.Size = new System.Drawing.Size(336, 133);
+            this.WeaponGroupBox.TabIndex = 7;
+            this.WeaponGroupBox.TabStop = false;
+            this.WeaponGroupBox.Text = "Weapon";
+            this.WeaponGroupBox.MouseHover += new System.EventHandler(this.OnHover);
             // 
-            // Form1
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.NoSpreadCheckbox);
+            this.groupBox8.Controls.Add(this.FastReloadCheckbox);
+            this.groupBox8.Controls.Add(this.NoRecoilCheckbox);
+            this.groupBox8.Location = new System.Drawing.Point(23, 22);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(155, 89);
+            this.groupBox8.TabIndex = 19;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Toggles";
+            this.groupBox8.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // NoSpreadCheckbox
+            // 
+            this.NoSpreadCheckbox.AutoSize = true;
+            this.NoSpreadCheckbox.Location = new System.Drawing.Point(12, 42);
+            this.NoSpreadCheckbox.Name = "NoSpreadCheckbox";
+            this.NoSpreadCheckbox.Size = new System.Drawing.Size(75, 17);
+            this.NoSpreadCheckbox.TabIndex = 0;
+            this.NoSpreadCheckbox.Text = "No spread";
+            this.NoSpreadCheckbox.UseVisualStyleBackColor = true;
+            this.NoSpreadCheckbox.CheckedChanged += new System.EventHandler(this.NoSpreadCheckbox_CheckedChanged);
+            this.NoSpreadCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // FastReloadCheckbox
+            // 
+            this.FastReloadCheckbox.AutoSize = true;
+            this.FastReloadCheckbox.Location = new System.Drawing.Point(12, 63);
+            this.FastReloadCheckbox.Name = "FastReloadCheckbox";
+            this.FastReloadCheckbox.Size = new System.Drawing.Size(78, 17);
+            this.FastReloadCheckbox.TabIndex = 9;
+            this.FastReloadCheckbox.Text = "Fast reload";
+            this.FastReloadCheckbox.UseVisualStyleBackColor = true;
+            this.FastReloadCheckbox.CheckedChanged += new System.EventHandler(this.FastReloadCheckbox_CheckedChanged);
+            this.FastReloadCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // NoRecoilCheckbox
+            // 
+            this.NoRecoilCheckbox.AutoSize = true;
+            this.NoRecoilCheckbox.Location = new System.Drawing.Point(12, 20);
+            this.NoRecoilCheckbox.Name = "NoRecoilCheckbox";
+            this.NoRecoilCheckbox.Size = new System.Drawing.Size(68, 17);
+            this.NoRecoilCheckbox.TabIndex = 13;
+            this.NoRecoilCheckbox.Text = "No recoil";
+            this.NoRecoilCheckbox.UseVisualStyleBackColor = true;
+            this.NoRecoilCheckbox.CheckedChanged += new System.EventHandler(this.NoRecoilCheckbox_CheckedChanged);
+            this.NoRecoilCheckbox.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // ExitImage
+            // 
+            this.ExitImage.BackColor = System.Drawing.Color.Salmon;
+            this.ExitImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ExitImage.Image = global::EnrageR.Properties.Resources.rage;
+            this.ExitImage.Location = new System.Drawing.Point(281, 4);
+            this.ExitImage.Name = "ExitImage";
+            this.ExitImage.Size = new System.Drawing.Size(69, 60);
+            this.ExitImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ExitImage.TabIndex = 4;
+            this.ExitImage.TabStop = false;
+            this.ExitImage.Click += new System.EventHandler(this.ExitImage_Click);
+            this.ExitImage.MouseHover += new System.EventHandler(this.OnHover);
+            // 
+            // Enrager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(360, 1071);
-            this.Controls.Add(this.groupBox7);
+            this.ClientSize = new System.Drawing.Size(360, 830);
+            this.Controls.Add(this.ExitImage);
+            this.Controls.Add(this.WeaponGroupBox);
             this.Controls.Add(this.VehicleGroupBox);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -488,14 +546,13 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "Enrager";
             this.Opacity = 0.8D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EnrageR | Pre-Release BUILD 6";
+            this.Text = "EnrageR | Pre-Release BUILD 9";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseHover += new System.EventHandler(this.OnHover);
-            ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -514,14 +571,16 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VehicleHealthTrackbar)).EndInit();
+            this.WeaponGroupBox.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox ExitImage;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label headerLabel;
         private System.Windows.Forms.Label MarqueeLabel;
@@ -555,7 +614,12 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox WeaponGroupBox;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.CheckBox NoSpreadCheckbox;
+        private System.Windows.Forms.CheckBox FastReloadCheckbox;
+        private System.Windows.Forms.CheckBox NoRecoilCheckbox;
+        private System.Windows.Forms.PictureBox ExitImage;
     }
 }
 
