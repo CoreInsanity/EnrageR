@@ -39,6 +39,7 @@ namespace EnrageR.Models
     }
     enum Locations
     { 
+        Waypoint,
         LSAirport,
         Pier,
         Maze,

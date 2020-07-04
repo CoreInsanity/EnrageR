@@ -46,6 +46,7 @@ namespace EnrageR
             MarqueeTimer.Start();
             InitializeTooltips();
 
+            TeleportBox.Items.Add("Waypoint");
             foreach (var location in Models.Location.GetLocations())
                 TeleportBox.Items.Add(location.Name);
             TeleportBox.SelectedIndex = 0;
@@ -74,9 +75,10 @@ namespace EnrageR
 
             if (e.isRCtrlPressed)
             {
-                var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
-                if (loc == null) return;
-                Player.Location = loc;
+                TeleportButton_Click(new object(), new EventArgs());
+                //var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
+                //if (loc == null) return;
+                //Player.Location = loc;
             }
 
             if (e.Key == Keys.F10)
@@ -125,13 +127,14 @@ namespace EnrageR
 
         private void TeleportButton_Click(object sender, EventArgs e)
         {
-            var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
-            if (loc == null) return;
-            Player.Location = loc;
-
+            if (TeleportBox.Text == "Waypoint") Player.Location = Player.Waypoint;
+            else
+            {
+                var loc = Models.Location.GetLocations().FirstOrDefault(l => l.Name.ToString().Equals(TeleportBox.Text));
+                if (loc != null) Player.Location = loc;
+            }
             WindowState = FormWindowState.Minimized;
         }
-
         private void OnHover(object sender, EventArgs e)
         {
             if (!CloseTimer.Enabled) CloseTimer.Start();

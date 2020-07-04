@@ -42,6 +42,14 @@ namespace EnrageR.Models
                 Gta.WriteFloat(PlayerAddy + 0x98, value.Z);
             }
         }
+        public Location Waypoint
+        {
+            get
+            { 
+                var baseAddy = (long)Gta.GtaProc.MainModule.BaseAddress;
+                return new Location(Gta.ReadFloat(baseAddy + 0x1F43408), Gta.ReadFloat(baseAddy + 0x1F4340C), 20, Locations.Waypoint);
+            }
+        }
         public float Health
         {
             get
